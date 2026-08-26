@@ -3,6 +3,7 @@ import type { GuideProps } from "@/lib/types";
 import DefaultGuide from "./_default/Guide";
 import DispatchGuide from "./dispatch/Guide";
 import DetroitGuide from "./detroit-become-human/Guide";
+import LegoBatmanGuide from "./lego-batman-legacy-of-the-dark-knight/Guide";
 
 /**
  * slug -> custom guide component. A game with no entry here still renders
@@ -12,6 +13,7 @@ import DetroitGuide from "./detroit-become-human/Guide";
 export const guides: Record<string, ComponentType<GuideProps>> = {
   dispatch: DispatchGuide,
   "detroit-become-human": DetroitGuide,
+  "lego-batman-legacy-of-the-dark-knight": LegoBatmanGuide,
 };
 
 export const getGuide = (slug: string): ComponentType<GuideProps> =>

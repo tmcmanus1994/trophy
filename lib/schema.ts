@@ -15,6 +15,7 @@ const stepSchema = z.object({
   code: z.string().optional(),     // password / input sequence
   tags: z.array(z.string().min(1)).optional(),
   group: idSchema.optional(),      // references the trophy's stepGroups
+  target: z.number().int().positive().optional(), // numeric counter goal
 });
 
 const stepGroupSchema = z.object({
@@ -32,6 +33,7 @@ const trophySchema = z.object({
   missable: z.boolean().default(false),
   dlc: z.boolean().default(false),
   requires: z.array(idSchema).default([]),
+  counter: z.number().int().positive().optional(), // numeric goal (e.g. 200 caches)
   stepGroups: z.array(stepGroupSchema).optional(),
   steps: z.array(stepSchema).optional(),
   note: z.string().optional(),

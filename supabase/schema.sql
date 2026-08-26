@@ -9,6 +9,8 @@ create table if not exists progress (
   item_type   text        not null default 'trophy',  -- 'trophy' | 'step'
   done        boolean     not null default false,
   done_at     timestamptz,
+  value       integer,               -- numeric progress for counter items
+
   source      text        not null default 'manual',  -- 'manual' | 'psnprofiles'
   updated_at  timestamptz not null default now(),
   primary key (user_key, game_slug, item_id)

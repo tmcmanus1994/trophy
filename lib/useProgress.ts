@@ -74,6 +74,9 @@ export function useProgress(gameSlug: string, trophies: Trophy[] = []) {
         done_at: entry.done_at,
         source: entry.source,
         updated_at: entry.updated_at,
+        // Only sent for counter items, so pre-migration databases (no value
+        // column) keep working for plain toggles.
+        ...(entry.value !== undefined ? { value: entry.value } : {}),
       });
       const pending = readJSON<PendingMap>(pendingKey(gameSlug), {});
       if (error) {
@@ -110,11 +113,23 @@ export function useProgress(gameSlug: string, trophies: Trophy[] = []) {
 
     const sync = async () => {
       setSyncState("syncing");
-      const { data, error } = await supabase!
+      let { data, error } = await supabase!
         .from("progress")
-        .select("item_id, item_type, done, done_at, source, updated_at")
+        .select("item_id, item_type, done, done_at, source, updated_at, value")
         .eq("user_key", USER_KEY)
         .eq("game_slug", gameSlug);
+
+      // Databases that haven't run the value-column migration reject the
+      // select — retry without it so everything else keeps working.
+      if (error) {
+        const retry = await supabase!
+          .from("progress")
+          .select("item_id, item_type, done, done_at, source, updated_at")
+          .eq("user_key", USER_KEY)
+          .eq("game_slug", gameSlug);
+        data = retry.data as typeof data;
+        error = retry.error;
+      }
 
       if (cancelled) return;
       if (error) {
@@ -132,6 +147,9 @@ export function useProgress(gameSlug: string, trophies: Trophy[] = []) {
           done_at: row.done_at,
           updated_at: row.updated_at,
           source: row.source,
+          ...((row as { value?: number | null }).value != null
+            ? { value: (row as { value?: number | null }).value! }
+            : {}),
         };
         const localEntry = cached[row.item_id];
         if (!localEntry || localEntry.updated_at <= remote.updated_at) {
@@ -176,6 +194,7 @@ export function useProgress(gameSlug: string, trophies: Trophy[] = []) {
             done_at?: string | null;
             source?: "manual" | "psnprofiles";
             updated_at?: string;
+            value?: number | null;
           };
           if (!row?.item_id || row.user_key !== USER_KEY) return;
           const current = progressRef.current[row.item_id];
@@ -185,6 +204,7 @@ export function useProgress(gameSlug: string, trophies: Trophy[] = []) {
             done_at: row.done_at ?? null,
             updated_at: row.updated_at ?? new Date().toISOString(),
             source: row.source ?? "manual",
+            ...(row.value != null ? { value: row.value } : {}),
           };
           setProgress((prev) => {
             const next = { ...prev, [row.item_id!]: entry };
@@ -210,6 +230,32 @@ export function useProgress(gameSlug: string, trophies: Trophy[] = []) {
   const isDone = useCallback(
     (itemId: string) => !!progress[itemId]?.done,
     [progress]
+  );
+
+  const getValue = useCallback(
+    (itemId: string) => progress[itemId]?.value ?? 0,
+    [progress]
+  );
+
+  const setValue = useCallback(
+    (itemId: string, value: number) => {
+      const now = new Date().toISOString();
+      const prev = progressRef.current[itemId];
+      const entry: ProgressEntry = {
+        done: prev?.done ?? false,
+        done_at: prev?.done_at ?? null,
+        updated_at: now,
+        source: "manual",
+        value: Math.max(0, Math.floor(value)),
+      };
+      applyLocal({ [itemId]: entry });
+      void pushEntry(
+        itemId,
+        itemId.includes("::") ? "step" : "trophy",
+        entry
+      );
+    },
+    [applyLocal, pushEntry]
   );
 
   const toggle = useCallback(
@@ -249,5 +295,5 @@ export function useProgress(gameSlug: string, trophies: Trophy[] = []) {
     };
   }, [trophies, progress]);
 
-  return { isDone, toggle, completion, syncState };
+  return { isDone, toggle, getValue, setValue, completion, syncState };
 }

@@ -7,6 +7,7 @@ export interface TrophyStep {
   code?: string;
   tags?: string[];
   group?: string;
+  target?: number;
 }
 
 export interface StepGroup {
@@ -24,6 +25,7 @@ export interface Trophy {
   missable: boolean;
   dlc: boolean;
   requires: string[];
+  counter?: number;
   stepGroups?: StepGroup[];
   steps?: TrophyStep[];
   note?: string;
@@ -64,6 +66,8 @@ export interface ProgressEntry {
   done_at: string | null;
   updated_at: string;
   source: "manual" | "psnprofiles";
+  /** Numeric progress toward a counter trophy/step (e.g. 59 of 100 suits). */
+  value?: number;
 }
 
 export type ProgressMap = Record<string, ProgressEntry>;

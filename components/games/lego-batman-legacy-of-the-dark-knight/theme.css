@@ -1,0 +1,471 @@
+/* LEGO Batman: Legacy of the Dark Knight — bat-signal counter grid. */
+.lbat {
+  --accent: #f5c518;
+  --lb-cave: #070b14;
+  --lb-midnight: #122a52;
+  --lb-cowl: #1e4e8c;
+  --lb-rim: #4fc3f7;
+  --lb-yellow: #f5c518;
+  --lb-neon: #b54bd6;
+  --lb-red: #d6262b;
+  --lb-text: #dbe4f2;
+  --lb-muted: #7f8db0;
+  --lb-panel: #0c1322;
+  --lb-line: #1a2742;
+  --ring-track: var(--lb-line);
+
+  min-height: 100vh;
+  background:
+    radial-gradient(90% 42% at 50% -6%, rgba(30, 78, 140, 0.35), transparent 70%),
+    var(--lb-cave);
+  color: var(--lb-text);
+  font-family: "IBM Plex Sans", "Segoe UI", sans-serif;
+  font-size: 14.5px;
+  line-height: 1.5;
+  padding-bottom: 90px;
+  font-variant-numeric: tabular-nums;
+}
+
+.lbat .wrap {
+  max-width: 980px;
+  margin: 0 auto;
+  padding: 0 20px;
+}
+
+.lbat .lb-back {
+  display: inline-block;
+  color: var(--lb-muted);
+  font-size: 11px;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  margin: 26px 0 18px;
+}
+
+.lbat .lb-back:hover {
+  color: var(--lb-rim);
+}
+
+/* ------- header ------- */
+.lb-header {
+  display: flex;
+  align-items: center;
+  gap: 30px;
+  border: 1px solid var(--lb-line);
+  border-radius: 14px;
+  background: linear-gradient(180deg, #0e1830, var(--lb-panel));
+  padding: 26px 30px;
+}
+
+.lb-header-info {
+  flex: 1;
+  min-width: 0;
+}
+
+.lb-eyebrow {
+  color: var(--lb-neon);
+  font-size: 10.5px;
+  font-weight: 600;
+  letter-spacing: 0.3em;
+  text-transform: uppercase;
+  margin-bottom: 8px;
+}
+
+.lb-title {
+  font-family: "Anton", "Arial Narrow", sans-serif;
+  font-weight: 400;
+  font-size: clamp(24px, 4.8vw, 40px);
+  letter-spacing: 0.02em;
+  text-transform: uppercase;
+  color: #fff;
+  margin: 0;
+  line-height: 1.05;
+}
+
+.lb-title em {
+  font-style: normal;
+  color: var(--lb-yellow);
+}
+
+.lb-plat {
+  display: flex;
+  align-items: center;
+  gap: 7px;
+  margin-top: 10px;
+  font-size: 13px;
+  color: var(--lb-muted);
+}
+
+.lb-meta {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px 22px;
+  margin-top: 14px;
+  font-size: 12px;
+  color: var(--lb-muted);
+}
+
+.lb-meta b {
+  color: var(--lb-text);
+  font-weight: 600;
+}
+
+.lb-tiers {
+  display: flex;
+  gap: 14px;
+  margin-top: 10px;
+  font-size: 12.5px;
+}
+
+.lb-tiers span {
+  display: inline-flex;
+  align-items: center;
+  gap: 5px;
+}
+
+.lb-hero-emblem {
+  flex: none;
+  text-align: center;
+}
+
+.lb-hero-emblem .lb-pct {
+  font-family: "Anton", sans-serif;
+  font-size: 22px;
+  color: var(--lb-yellow);
+  margin-top: 6px;
+}
+
+/* ------- sticky ------- */
+.lb-sticky {
+  position: sticky;
+  top: 0;
+  z-index: 20;
+  margin-top: 16px;
+  display: flex;
+  align-items: center;
+  gap: 18px;
+  border-top: 1px solid var(--lb-line);
+  border-bottom: 1px solid var(--lb-line);
+  background: rgba(7, 11, 20, 0.88);
+  backdrop-filter: blur(10px);
+  padding: 8px 6px;
+  font-size: 12px;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: var(--lb-muted);
+}
+
+.lb-sticky b {
+  color: var(--lb-yellow);
+}
+
+.lb-sticky .spacer {
+  flex: 1;
+}
+
+/* ------- cleared strip ------- */
+.lb-cleared {
+  margin-top: 20px;
+  border: 1px solid var(--lb-line);
+  border-radius: 10px;
+  background: var(--lb-panel);
+  padding: 12px 16px;
+}
+
+.lb-cleared summary {
+  cursor: pointer;
+  font-size: 11px;
+  font-weight: 600;
+  letter-spacing: 0.22em;
+  text-transform: uppercase;
+  color: var(--lb-muted);
+  list-style: none;
+}
+
+.lb-cleared summary::-webkit-details-marker {
+  display: none;
+}
+
+.lb-cleared summary b {
+  color: var(--lb-yellow);
+}
+
+.lb-cleared-list {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px;
+  margin-top: 12px;
+}
+
+.lb-cleared-chip {
+  display: inline-flex;
+  align-items: center;
+  gap: 5px;
+  font-size: 11px;
+  color: var(--lb-muted);
+  border: 1px solid var(--lb-line);
+  border-radius: 4px;
+  padding: 3px 8px;
+}
+
+/* ------- intro ------- */
+.lb-intro {
+  margin-top: 20px;
+  border-left: 3px solid var(--lb-yellow);
+  padding: 4px 0 4px 16px;
+  color: var(--lb-muted);
+  font-size: 13.5px;
+  max-width: 72ch;
+}
+
+.lb-intro p {
+  margin: 0 0 10px;
+}
+
+.lb-intro p:last-child {
+  margin: 0;
+}
+
+/* ------- counter grid ------- */
+.lb-grid-title {
+  font-family: "Anton", sans-serif;
+  font-size: 16px;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: #fff;
+  margin: 34px 0 0;
+}
+
+.lb-grid-title small {
+  font-family: "IBM Plex Sans", sans-serif;
+  font-size: 11px;
+  letter-spacing: 0.16em;
+  color: var(--lb-muted);
+  margin-left: 12px;
+}
+
+.lb-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(420px, 1fr));
+  gap: 14px;
+  margin-top: 14px;
+}
+
+@media (max-width: 500px) {
+  .lb-grid {
+    grid-template-columns: 1fr;
+  }
+}
+
+.lb-card {
+  border: 1px solid var(--lb-line);
+  border-radius: 12px;
+  background: var(--lb-panel);
+  padding: 16px 18px;
+  display: flex;
+  gap: 16px;
+  align-items: flex-start;
+  transition: border-color 0.15s;
+}
+
+.lb-card:hover {
+  border-color: var(--lb-cowl);
+}
+
+.lb-card-emblem {
+  flex: none;
+  text-align: center;
+}
+
+.lb-card-count {
+  margin-top: 4px;
+  font-size: 12px;
+  color: var(--lb-muted);
+}
+
+.lb-card-count b {
+  color: var(--lb-yellow);
+}
+
+.lb-card-body {
+  flex: 1;
+  min-width: 0;
+}
+
+.lb-card-name {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  flex-wrap: wrap;
+  font-weight: 600;
+  font-size: 14px;
+  color: #fff;
+}
+
+.lb-card-desc {
+  margin: 3px 0 0;
+  font-size: 12.5px;
+  color: var(--lb-muted);
+}
+
+/* counter input row */
+.lb-counter-row {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  margin-top: 10px;
+}
+
+.lb-counter-input {
+  width: 76px;
+  min-height: 40px;
+  background: #0a1120;
+  border: 1px solid var(--lb-line);
+  border-radius: 8px;
+  color: var(--lb-yellow);
+  font: inherit;
+  font-weight: 600;
+  text-align: center;
+  padding: 4px 8px;
+}
+
+.lb-counter-input:focus {
+  outline: 2px solid var(--lb-rim);
+  outline-offset: 1px;
+}
+
+.lb-counter-total {
+  color: var(--lb-muted);
+  font-size: 13px;
+}
+
+.lb-plus {
+  min-width: 44px;
+  min-height: 40px;
+  border: 1px solid var(--lb-line);
+  border-radius: 8px;
+  background: #0a1120;
+  color: var(--lb-rim);
+  font-weight: 700;
+  font-size: 16px;
+}
+
+.lb-plus:hover {
+  border-color: var(--lb-rim);
+}
+
+/* steps */
+.lb-steps {
+  margin: 10px 0 0;
+  border-top: 1px dashed var(--lb-line);
+  padding-top: 8px;
+}
+
+.lb-steps summary {
+  cursor: pointer;
+  font-size: 11px;
+  font-weight: 600;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: var(--lb-rim);
+  list-style: none;
+}
+
+.lb-steps summary::-webkit-details-marker {
+  display: none;
+}
+
+.lb-step {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  margin-top: 8px;
+  font-size: 12.5px;
+}
+
+.lb-step-text {
+  flex: 1;
+  min-width: 0;
+}
+
+.lb-step.done .lb-step-text {
+  text-decoration: line-through;
+  color: var(--lb-muted);
+}
+
+.lb-step .lb-counter-input {
+  width: 58px;
+  min-height: 34px;
+}
+
+.lb-step .lb-step-total {
+  color: var(--lb-muted);
+  font-size: 12px;
+  white-space: nowrap;
+}
+
+.lb-note {
+  margin-top: 10px;
+  font-size: 12px;
+  color: var(--lb-muted);
+  background: #0a1120;
+  border-radius: 8px;
+  padding: 8px 12px;
+}
+
+.lb-note p {
+  margin: 0 0 6px;
+}
+
+.lb-note p:last-child {
+  margin: 0;
+}
+
+.lb-note strong {
+  color: var(--lb-rim);
+}
+
+/* warning color reserved: bug notes etc. flagged via em */
+.lb-note em {
+  color: var(--lb-red);
+  font-style: normal;
+}
+
+/* shared checkbox re-dress */
+.lbat .trophy-checkbox-box {
+  border-radius: 6px;
+  border-color: var(--lb-cowl);
+  background: #0a1120;
+}
+
+.lbat .trophy-checkbox:hover .trophy-checkbox-box {
+  border-color: var(--lb-yellow);
+}
+
+.lbat .trophy-checkbox-box.is-checked {
+  background: var(--lb-yellow);
+  border-color: var(--lb-yellow);
+  color: #070b14;
+}
+
+.lbat .sync-indicator {
+  font-size: 11px;
+  text-transform: none;
+  letter-spacing: normal;
+}
+
+/* bat emblem meter */
+.lb-emblem-full {
+  filter: drop-shadow(0 0 10px rgba(79, 195, 247, 0.55));
+}
+
+@media (max-width: 620px) {
+  .lb-header {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 18px;
+  }
+
+  .lb-card {
+    flex-direction: column;
+  }
+}
