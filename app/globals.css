@@ -1,0 +1,711 @@
+@import "tailwindcss";
+
+/* ---------------------------------------------------------------- */
+/* Palette — PS5-console dark. Blue is primary, red is the hint.    */
+/* ---------------------------------------------------------------- */
+:root {
+  --ps-bg: #060c22;
+  --ps-bg-deep: #03061a;
+  --ps-surface: #0d1734;
+  --ps-surface-raised: #131f42;
+  --ps-line: #1d2a52;
+  --ps-blue: #0070d1;
+  --ps-blue-bright: #33a1ff;
+  --ps-red: #d6293a;
+  --ps-white: #f2f5fb;
+  --ps-muted: #8a96b8;
+
+  --trophy-bronze: #c9793c;
+  --trophy-silver: #c7cedc;
+  --trophy-gold: #e8b33b;
+  --trophy-platinum: #9fc4e8;
+
+  --accent: var(--ps-blue);
+  --ring-track: var(--ps-line);
+
+  --font-display: "Michroma";
+  --font-body: "Saira";
+}
+
+* {
+  box-sizing: border-box;
+}
+
+body {
+  margin: 0;
+  background: var(--ps-bg);
+  color: var(--ps-white);
+  font-family: var(--font-body), "Segoe UI", sans-serif;
+  font-size: 16px;
+  line-height: 1.55;
+  -webkit-font-smoothing: antialiased;
+}
+
+a {
+  color: inherit;
+  text-decoration: none;
+}
+
+button {
+  font: inherit;
+  color: inherit;
+  background: none;
+  border: none;
+  cursor: pointer;
+  padding: 0;
+}
+
+:focus-visible {
+  outline: 2px solid var(--ps-blue-bright);
+  outline-offset: 2px;
+  border-radius: 4px;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    transition-duration: 0.01ms !important;
+  }
+}
+
+/* ---------------------------------------------------------------- */
+/* Library home                                                     */
+/* ---------------------------------------------------------------- */
+.library {
+  min-height: 100vh;
+  position: relative;
+  background:
+    radial-gradient(120% 60% at 50% -10%, rgba(0, 112, 209, 0.28), transparent 65%),
+    linear-gradient(var(--ps-bg), var(--ps-bg-deep));
+  overflow-x: hidden;
+}
+
+/* Faint field of PlayStation button glyphs behind the hero. */
+.glyph-field {
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  opacity: 0.5;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='260' height='260' viewBox='0 0 260 260'%3E%3Cg fill='none' stroke='%231d2a52' stroke-width='2'%3E%3Cpath d='M28 44 16 66h24z'/%3E%3Ccircle cx='150' cy='40' r='11'/%3E%3Cpath d='M232 96l18 18m0-18l-18 18'/%3E%3Crect x='60' y='150' width='20' height='20'/%3E%3Ccircle cx='210' cy='200' r='11'/%3E%3Cpath d='M120 220 108 242h24z'/%3E%3C/g%3E%3C/svg%3E");
+  mask-image: linear-gradient(to bottom, black, transparent 85%);
+  -webkit-mask-image: linear-gradient(to bottom, black, transparent 85%);
+}
+
+.library-inner {
+  position: relative;
+  max-width: 1080px;
+  margin: 0 auto;
+  padding: 0 24px 96px;
+}
+
+.library-hero {
+  padding: 84px 0 56px;
+  text-align: center;
+}
+
+.library-glyphs {
+  display: flex;
+  justify-content: center;
+  gap: 18px;
+  margin-bottom: 26px;
+}
+
+.library-glyphs svg {
+  display: block;
+}
+
+.library-wordmark {
+  font-family: var(--font-display), sans-serif;
+  font-size: clamp(1.7rem, 5.5vw, 3rem);
+  letter-spacing: 0.28em;
+  margin: 0;
+  text-transform: uppercase;
+  animation: rise 0.7s ease both;
+}
+
+.library-tagline {
+  color: var(--ps-muted);
+  margin: 14px auto 0;
+  max-width: 34rem;
+  animation: rise 0.7s 0.1s ease both;
+}
+
+.library-beam {
+  width: 220px;
+  height: 2px;
+  margin: 34px auto 0;
+  background: linear-gradient(90deg, transparent, var(--ps-blue-bright), transparent);
+  animation: beam 1.1s 0.2s ease both;
+}
+
+@keyframes rise {
+  from {
+    opacity: 0;
+    transform: translateY(14px);
+  }
+  to {
+    opacity: 1;
+    transform: none;
+  }
+}
+
+@keyframes beam {
+  from {
+    transform: scaleX(0);
+    opacity: 0;
+  }
+  to {
+    transform: scaleX(1);
+    opacity: 1;
+  }
+}
+
+.library-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+  gap: 20px;
+}
+
+.library-empty {
+  text-align: center;
+  color: var(--ps-muted);
+  border: 1px dashed var(--ps-line);
+  border-radius: 14px;
+  padding: 48px 24px;
+}
+
+.library-empty code {
+  color: var(--ps-blue-bright);
+}
+
+/* ---------------------------------------------------------------- */
+/* Game card                                                        */
+/* ---------------------------------------------------------------- */
+.game-card {
+  display: block;
+  background: var(--ps-surface);
+  border: 1px solid var(--ps-line);
+  border-radius: 14px;
+  overflow: hidden;
+  transition: transform 0.18s ease, border-color 0.18s ease, box-shadow 0.18s ease;
+}
+
+.game-card:hover {
+  transform: translateY(-3px);
+  border-color: var(--accent);
+  box-shadow: 0 12px 34px rgba(0, 0, 0, 0.45);
+}
+
+.game-card-cover {
+  position: relative;
+  aspect-ratio: 16 / 7;
+  background:
+    radial-gradient(90% 120% at 15% 0%, color-mix(in srgb, var(--accent) 55%, transparent), transparent 70%),
+    linear-gradient(150deg, color-mix(in srgb, var(--accent) 30%, var(--ps-surface)), var(--ps-bg-deep));
+}
+
+.game-card-cover img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
+}
+
+.game-card-cover-title {
+  position: absolute;
+  inset: 0;
+  display: flex;
+  align-items: flex-end;
+  padding: 14px 16px;
+  font-family: var(--font-display), sans-serif;
+  font-size: 1.02rem;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  text-shadow: 0 2px 10px rgba(0, 0, 0, 0.6);
+}
+
+.game-card-body {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  padding: 14px 16px 16px;
+}
+
+.game-card-info {
+  flex: 1;
+  min-width: 0;
+}
+
+.game-card-title {
+  margin: 0;
+  font-weight: 600;
+  font-size: 1.05rem;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.game-card-platform {
+  margin: 2px 0 8px;
+  color: var(--ps-muted);
+  font-size: 0.82rem;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+}
+
+.game-card-counts {
+  display: flex;
+  gap: 12px;
+  font-size: 0.85rem;
+  color: var(--ps-muted);
+}
+
+.game-card-counts span {
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+}
+
+.game-card-plat {
+  display: inline-flex;
+  align-items: center;
+  gap: 5px;
+  color: var(--trophy-platinum);
+  font-size: 0.82rem;
+  font-weight: 600;
+  letter-spacing: 0.05em;
+}
+
+.progress-ring {
+  position: relative;
+  flex-shrink: 0;
+}
+
+.progress-ring-arc {
+  transition: stroke-dasharray 0.5s ease;
+}
+
+.progress-ring-label {
+  position: absolute;
+  inset: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 0.8rem;
+  font-weight: 600;
+}
+
+/* ---------------------------------------------------------------- */
+/* Guide (default layout)                                           */
+/* ---------------------------------------------------------------- */
+.guide {
+  min-height: 100vh;
+  background:
+    radial-gradient(110% 45% at 50% -5%, color-mix(in srgb, var(--accent) 26%, transparent), transparent 70%),
+    linear-gradient(var(--ps-bg), var(--ps-bg-deep));
+  padding-bottom: 96px;
+}
+
+.guide > header,
+.guide > main,
+.guide > .guide-intro {
+  max-width: 880px;
+  margin-left: auto;
+  margin-right: auto;
+  padding-left: 24px;
+  padding-right: 24px;
+}
+
+.guide-header {
+  padding-top: 40px;
+  padding-bottom: 24px;
+}
+
+.guide-back {
+  color: var(--ps-muted);
+  font-size: 0.9rem;
+  letter-spacing: 0.06em;
+}
+
+.guide-back:hover {
+  color: var(--ps-blue-bright);
+}
+
+.guide-platform {
+  margin: 26px 0 4px;
+  color: var(--ps-muted);
+  font-size: 0.85rem;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+}
+
+.guide-title {
+  margin: 0;
+  font-family: var(--font-display), sans-serif;
+  font-size: clamp(1.6rem, 4.5vw, 2.6rem);
+  letter-spacing: 0.04em;
+  line-height: 1.15;
+}
+
+.guide-plat-name {
+  display: flex;
+  align-items: center;
+  gap: 7px;
+  color: var(--trophy-platinum);
+  margin: 10px 0 0;
+  font-size: 0.95rem;
+}
+
+.guide-meta {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 12px 32px;
+  margin: 22px 0 0;
+}
+
+.guide-meta div {
+  display: flex;
+  flex-direction: column;
+}
+
+.guide-meta dt {
+  color: var(--ps-muted);
+  font-size: 0.72rem;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+}
+
+.guide-meta dd {
+  margin: 0;
+  font-size: 1.05rem;
+  font-weight: 600;
+}
+
+.guide-summary {
+  position: sticky;
+  top: 0;
+  z-index: 10;
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  max-width: 880px;
+  margin: 0 auto;
+  padding: 10px 24px;
+  background: color-mix(in srgb, var(--ps-bg) 82%, transparent);
+  backdrop-filter: blur(10px);
+  border-top: 1px solid var(--ps-line);
+  border-bottom: 1px solid var(--ps-line);
+}
+
+.guide-summary-percent {
+  font-size: 0.78rem;
+}
+
+.guide-summary-counts {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px 14px;
+  flex: 1;
+}
+
+.guide-summary-count {
+  display: inline-flex;
+  align-items: center;
+  gap: 5px;
+  font-size: 0.9rem;
+  font-variant-numeric: tabular-nums;
+}
+
+.guide-summary-side {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-end;
+  gap: 6px;
+}
+
+.guide-filters {
+  display: flex;
+  gap: 4px;
+  background: var(--ps-surface);
+  border: 1px solid var(--ps-line);
+  border-radius: 999px;
+  padding: 3px;
+}
+
+.guide-filter {
+  padding: 4px 12px;
+  border-radius: 999px;
+  font-size: 0.8rem;
+  color: var(--ps-muted);
+  min-height: 28px;
+}
+
+.guide-filter.is-active {
+  background: var(--accent);
+  color: var(--ps-white);
+}
+
+.guide-intro {
+  color: var(--ps-muted);
+  padding-top: 26px;
+  max-width: 880px;
+}
+
+.guide-intro p {
+  margin: 0 0 12px;
+}
+
+.guide-intro strong {
+  color: var(--ps-white);
+}
+
+.guide-phase {
+  margin-top: 40px;
+}
+
+.guide-phase-header h2 {
+  font-family: var(--font-display), sans-serif;
+  font-size: 1.05rem;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  margin: 0;
+  padding-left: 14px;
+  border-left: 3px solid var(--accent);
+}
+
+.guide-phase-header p {
+  color: var(--ps-muted);
+  margin: 8px 0 0 17px;
+  font-size: 0.95rem;
+}
+
+.guide-empty {
+  color: var(--ps-muted);
+  font-size: 0.95rem;
+  margin: 18px 0 0 17px;
+}
+
+/* ---------------------------------------------------------------- */
+/* Trophy rows                                                      */
+/* ---------------------------------------------------------------- */
+.trophy-list {
+  list-style: none;
+  margin: 18px 0 0;
+  padding: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.trophy-row {
+  display: flex;
+  gap: 6px;
+  background: var(--ps-surface);
+  border: 1px solid var(--ps-line);
+  border-radius: 12px;
+  padding: 12px 16px 14px 8px;
+  transition: border-color 0.15s ease, opacity 0.2s ease;
+}
+
+.trophy-row:hover {
+  border-color: color-mix(in srgb, var(--accent) 55%, var(--ps-line));
+}
+
+.trophy-row.is-done {
+  opacity: 0.62;
+}
+
+.trophy-row.is-done .trophy-name {
+  text-decoration: line-through;
+  text-decoration-color: var(--ps-muted);
+}
+
+.trophy-body {
+  flex: 1;
+  min-width: 0;
+  padding-top: 8px;
+}
+
+.trophy-title-line {
+  display: flex;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 8px;
+}
+
+.trophy-name {
+  font-weight: 600;
+}
+
+.trophy-desc {
+  margin: 4px 0 0;
+  color: var(--ps-muted);
+  font-size: 0.93rem;
+}
+
+.trophy-requires {
+  margin: 6px 0 0;
+  font-size: 0.82rem;
+  color: color-mix(in srgb, var(--accent) 75%, var(--ps-white));
+}
+
+.trophy-steps {
+  list-style: none;
+  margin: 10px 0 0;
+  padding: 0 0 0 4px;
+  border-left: 2px solid var(--ps-line);
+}
+
+.trophy-steps li {
+  display: flex;
+  align-items: center;
+  gap: 2px;
+}
+
+.trophy-steps li.is-done .trophy-step-text {
+  text-decoration: line-through;
+  color: var(--ps-muted);
+}
+
+.trophy-step-text {
+  font-size: 0.9rem;
+}
+
+.trophy-note {
+  margin-top: 10px;
+  padding: 10px 14px;
+  background: var(--ps-bg-deep);
+  border-radius: 8px;
+  font-size: 0.88rem;
+  color: var(--ps-muted);
+}
+
+.trophy-note p {
+  margin: 0 0 8px;
+}
+
+.trophy-note p:last-child {
+  margin-bottom: 0;
+}
+
+/* ---------------------------------------------------------------- */
+/* Primitives                                                       */
+/* ---------------------------------------------------------------- */
+.trophy-checkbox {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+  border-radius: 10px;
+}
+
+.trophy-checkbox-box {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 50%;
+  border: 2px solid var(--ps-muted);
+  color: transparent;
+  transition: background 0.15s ease, border-color 0.15s ease, color 0.15s ease;
+}
+
+.trophy-checkbox:hover .trophy-checkbox-box {
+  border-color: var(--accent);
+}
+
+.trophy-checkbox-box.is-checked {
+  background: var(--accent);
+  border-color: var(--accent);
+  color: var(--ps-white);
+}
+
+.trophy-checkbox-mark {
+  transform: scale(0.6);
+  opacity: 0;
+  transition: transform 0.18s ease, opacity 0.18s ease;
+}
+
+.is-checked .trophy-checkbox-mark {
+  transform: scale(1);
+  opacity: 1;
+}
+
+.missable-badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 5px;
+  background: color-mix(in srgb, var(--ps-red) 18%, transparent);
+  color: #ff6b7a;
+  border: 1px solid color-mix(in srgb, var(--ps-red) 55%, transparent);
+  border-radius: 999px;
+  padding: 2px 9px;
+  font-size: 0.72rem;
+  font-weight: 600;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+}
+
+.dlc-badge {
+  border: 1px solid var(--ps-line);
+  color: var(--ps-muted);
+  border-radius: 999px;
+  padding: 2px 9px;
+  font-size: 0.72rem;
+  font-weight: 600;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+}
+
+.sync-indicator {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  font-size: 0.75rem;
+  color: var(--ps-muted);
+  white-space: nowrap;
+}
+
+.sync-dot {
+  width: 7px;
+  height: 7px;
+  border-radius: 50%;
+  background: var(--ps-muted);
+}
+
+.sync-synced .sync-dot {
+  background: #3ecf6e;
+}
+
+.sync-syncing .sync-dot {
+  background: var(--ps-blue-bright);
+  animation: pulse 1.1s ease infinite;
+}
+
+.sync-offline .sync-dot {
+  background: var(--trophy-gold);
+}
+
+@keyframes pulse {
+  50% {
+    opacity: 0.35;
+  }
+}
+
+/* ---------------------------------------------------------------- */
+/* Small screens                                                    */
+/* ---------------------------------------------------------------- */
+@media (max-width: 560px) {
+  .guide-summary {
+    flex-wrap: wrap;
+    gap: 10px 14px;
+  }
+
+  .guide-summary-side {
+    flex-direction: row;
+    align-items: center;
+    width: 100%;
+    justify-content: space-between;
+  }
+}
