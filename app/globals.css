@@ -105,6 +105,61 @@ button {
   text-align: center;
 }
 
+/* PS5-style profile chip, top-right like the console home. */
+.profile-chip {
+  position: absolute;
+  top: 22px;
+  right: 26px;
+  z-index: 5;
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  animation: rise 0.7s 0.25s ease both;
+}
+
+.profile-name {
+  font-size: 0.9rem;
+  font-weight: 600;
+  letter-spacing: 0.05em;
+}
+
+.profile-avatar {
+  width: 44px;
+  height: 44px;
+  border-radius: 50%;
+  overflow: hidden;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: var(--ps-surface-raised);
+  box-shadow:
+    0 0 0 2px var(--ps-bg),
+    0 0 0 4px var(--ps-blue);
+}
+
+.profile-avatar img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
+}
+
+.profile-initials {
+  font-family: var(--font-display), sans-serif;
+  font-size: 0.85rem;
+  color: var(--ps-blue-bright);
+}
+
+@media (max-width: 560px) {
+  .profile-chip {
+    right: 18px;
+  }
+
+  .profile-name {
+    display: none;
+  }
+}
+
 .library-glyphs {
   display: flex;
   justify-content: center;

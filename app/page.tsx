@@ -1,5 +1,6 @@
 import { getAllGames } from "@/lib/content";
 import { GameCard } from "@/components/library/GameCard";
+import { ProfileChip } from "@/components/library/ProfileChip";
 
 /* The four PlayStation button glyphs — the circle carries the hint of red. */
 function Glyphs() {
@@ -45,6 +46,7 @@ export default function Library() {
   return (
     <div className="library">
       <div className="glyph-field" aria-hidden="true" />
+      <ProfileChip />
       <div className="library-inner">
         <header className="library-hero">
           <Glyphs />

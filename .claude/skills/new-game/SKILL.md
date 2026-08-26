@@ -68,9 +68,12 @@ that didn't build.
 Commit with a message like `Add <Title> guide` and push. Done — the guide
 is live with the default layout.
 
-## 5. Optional: custom layout
+## 5. Custom layout
 
-Only when asked. Create `components/games/<slug>/Guide.tsx`, register it in
+The owner wants every game to get its own UI, designed around the game
+itself. After the guide ships with the default layout, offer the design
+pass (or do it when asked). Create `components/games/<slug>/Guide.tsx`,
+register it in
 `components/games/registry.ts`, and treat it as a real design brief per
 section 7 of `docs/HANDOFF.md`: state the palette (4–6 hex values from the
 game's world), the type pairing (don't reuse a previous game's), the
