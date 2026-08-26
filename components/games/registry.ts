@@ -4,6 +4,7 @@ import DefaultGuide from "./_default/Guide";
 import DispatchGuide from "./dispatch/Guide";
 import DetroitGuide from "./detroit-become-human/Guide";
 import LegoBatmanGuide from "./lego-batman-legacy-of-the-dark-knight/Guide";
+import DemonSlayerGuide from "./demon-slayer-hinokami-chronicles-2/Guide";
 
 /**
  * slug -> custom guide component. A game with no entry here still renders
@@ -14,6 +15,7 @@ export const guides: Record<string, ComponentType<GuideProps>> = {
   dispatch: DispatchGuide,
   "detroit-become-human": DetroitGuide,
   "lego-batman-legacy-of-the-dark-knight": LegoBatmanGuide,
+  "demon-slayer-hinokami-chronicles-2": DemonSlayerGuide,
 };
 
 export const getGuide = (slug: string): ComponentType<GuideProps> =>

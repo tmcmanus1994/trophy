@@ -1,0 +1,558 @@
+/* Demon Slayer: Hinokami Chronicles 2 — two-boss endgame page. */
+.ds2 {
+  --accent: #c1272d;
+  --ds-sumi: #140406;
+  --ds-deep: #8e1116;
+  --ds-crimson: #c1272d;
+  --ds-ember: #f2711c;
+  --ds-ash: #ffe3d2;
+  --ds-haori: #1e5b4a;
+  --ds-pink: #f26c9c;
+  --ds-panel: #1c090c;
+  --ds-line: #34141a;
+  --ds-muted: #a3838a;
+  --ring-track: var(--ds-line);
+
+  min-height: 100vh;
+  background:
+    radial-gradient(85% 40% at 50% -4%, rgba(193, 39, 45, 0.22), transparent 70%),
+    var(--ds-sumi);
+  color: var(--ds-ash);
+  font-family: "Karla", "Segoe UI", sans-serif;
+  font-size: 14.5px;
+  line-height: 1.55;
+  padding-bottom: 100px;
+  font-variant-numeric: tabular-nums;
+}
+
+.ds2 .wrap {
+  max-width: 960px;
+  margin: 0 auto;
+  padding: 0 20px;
+  position: relative;
+}
+
+.ds2 .ds-back {
+  display: inline-block;
+  color: var(--ds-muted);
+  font-size: 11px;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  margin: 26px 0 18px;
+}
+
+.ds2 .ds-back:hover {
+  color: var(--ds-ember);
+}
+
+.ds2 .ds-display {
+  font-family: "Yuji Syuku", serif;
+}
+
+/* vertical JP strip */
+.ds-jp {
+  position: absolute;
+  top: 70px;
+  right: -6px;
+  writing-mode: vertical-rl;
+  font-family: "Yuji Syuku", serif;
+  font-size: 26px;
+  color: rgba(193, 39, 45, 0.35);
+  letter-spacing: 0.3em;
+  pointer-events: none;
+  user-select: none;
+}
+
+/* ------- header ------- */
+.ds-header {
+  display: flex;
+  align-items: center;
+  gap: 28px;
+  border: 1px solid var(--ds-line);
+  border-radius: 12px;
+  background: linear-gradient(180deg, #220b0f, var(--ds-panel));
+  padding: 26px 30px;
+}
+
+.ds-header-info {
+  flex: 1;
+  min-width: 0;
+}
+
+.ds-eyebrow {
+  color: var(--ds-muted);
+  font-size: 10.5px;
+  letter-spacing: 0.28em;
+  text-transform: uppercase;
+  margin-bottom: 10px;
+}
+
+.ds-title {
+  font-family: "Yuji Syuku", serif;
+  font-weight: 400;
+  font-size: clamp(22px, 4.2vw, 34px);
+  color: var(--ds-ash);
+  margin: 0;
+  line-height: 1.2;
+  text-shadow: 0 0 22px rgba(193, 39, 45, 0.4);
+}
+
+.ds-title small {
+  display: block;
+  font-size: 0.5em;
+  color: var(--ds-crimson);
+  margin-top: 4px;
+}
+
+.ds-plat {
+  display: flex;
+  align-items: center;
+  gap: 7px;
+  margin-top: 10px;
+  font-size: 13px;
+  color: var(--ds-muted);
+}
+
+.ds-meta {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px 22px;
+  margin-top: 14px;
+  font-size: 12px;
+  color: var(--ds-muted);
+}
+
+.ds-meta b {
+  color: var(--ds-ash);
+}
+
+.ds-meta .hard {
+  color: var(--ds-ember);
+}
+
+.ds-tiers {
+  display: flex;
+  gap: 14px;
+  margin-top: 10px;
+  font-size: 12.5px;
+}
+
+.ds-tiers span {
+  display: inline-flex;
+  align-items: center;
+  gap: 5px;
+}
+
+.ds-ring-label {
+  font-size: 14px;
+  font-weight: 600;
+}
+
+/* ------- sticky ------- */
+.ds-sticky {
+  position: sticky;
+  top: 0;
+  z-index: 20;
+  margin-top: 16px;
+  display: flex;
+  align-items: center;
+  gap: 18px;
+  border-top: 1px solid var(--ds-line);
+  border-bottom: 1px solid var(--ds-line);
+  background: rgba(20, 4, 6, 0.88);
+  backdrop-filter: blur(10px);
+  padding: 8px 6px;
+  font-size: 12px;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: var(--ds-muted);
+}
+
+.ds-sticky b {
+  color: var(--ds-ember);
+}
+
+.ds-sticky .spacer {
+  flex: 1;
+}
+
+/* ------- intro ------- */
+.ds-intro {
+  margin-top: 20px;
+  border-left: 3px solid var(--ds-crimson);
+  padding: 4px 0 4px 16px;
+  color: var(--ds-muted);
+  font-size: 13.5px;
+  max-width: 72ch;
+}
+
+.ds-intro p {
+  margin: 0 0 10px;
+}
+
+.ds-intro p:last-child {
+  margin: 0;
+}
+
+.ds-intro code {
+  color: var(--ds-ember);
+  font-family: inherit;
+}
+
+/* ------- boss cards ------- */
+.ds-boss {
+  margin-top: 26px;
+  border: 1px solid var(--ds-line);
+  border-radius: 12px;
+  background: var(--ds-panel);
+  padding: 22px 26px;
+}
+
+.ds-boss-head {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  flex-wrap: wrap;
+}
+
+.ds-boss-head h2 {
+  font-family: "Yuji Syuku", serif;
+  font-weight: 400;
+  font-size: 24px;
+  color: var(--ds-ash);
+  margin: 0;
+}
+
+.ds-boss-head .ds-desc {
+  width: 100%;
+  margin: 4px 0 0;
+  color: var(--ds-muted);
+  font-size: 13px;
+}
+
+.ds-boss.earned h2 {
+  color: var(--ds-pink);
+}
+
+.ds-boss-grid {
+  display: grid;
+  grid-template-columns: 150px 1fr;
+  gap: 24px;
+  margin-top: 18px;
+}
+
+@media (max-width: 640px) {
+  .ds-boss-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .ds-blade-col {
+    display: flex;
+    justify-content: center;
+  }
+}
+
+/* counter row */
+.ds-counter-row {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  margin-bottom: 14px;
+  flex-wrap: wrap;
+}
+
+.ds-counter-label {
+  font-size: 11px;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  color: var(--ds-muted);
+}
+
+.ds-counter-input {
+  width: 76px;
+  min-height: 42px;
+  background: #0f0305;
+  border: 1px solid var(--ds-line);
+  border-radius: 8px;
+  color: var(--ds-ember);
+  font: inherit;
+  font-weight: 700;
+  font-size: 16px;
+  text-align: center;
+}
+
+.ds-counter-input:focus {
+  outline: 2px solid var(--ds-ember);
+  outline-offset: 1px;
+}
+
+.ds-counter-total {
+  color: var(--ds-muted);
+}
+
+.ds-plus {
+  min-width: 44px;
+  min-height: 42px;
+  border: 1px solid var(--ds-line);
+  border-radius: 8px;
+  background: #0f0305;
+  color: var(--ds-ember);
+  font-weight: 700;
+  font-size: 16px;
+}
+
+.ds-plus:hover {
+  border-color: var(--ds-ember);
+}
+
+/* protocol steps */
+.ds-steps {
+  border-top: 1px dashed var(--ds-line);
+  padding-top: 10px;
+  margin-top: 6px;
+}
+
+.ds-steps summary {
+  cursor: pointer;
+  font-size: 11px;
+  font-weight: 700;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  color: var(--ds-crimson);
+  list-style: none;
+}
+
+.ds-steps summary::-webkit-details-marker {
+  display: none;
+}
+
+.ds-step {
+  display: flex;
+  align-items: flex-start;
+  gap: 4px;
+  margin-top: 6px;
+  font-size: 12.5px;
+}
+
+.ds-step-text {
+  padding-top: 11px;
+}
+
+.ds-step.done .ds-step-text {
+  text-decoration: line-through;
+  color: var(--ds-muted);
+}
+
+/* battle rows (Trials Prevailed) */
+.ds-battles {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  margin: 14px 0;
+}
+
+.ds-battle {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  border: 1px solid var(--ds-line);
+  border-radius: 10px;
+  background: #150507;
+  padding: 10px 16px 10px 12px;
+}
+
+.ds-battle-num {
+  font-family: "Yuji Syuku", serif;
+  font-size: 30px;
+  color: var(--ds-crimson);
+  width: 34px;
+  text-align: center;
+  flex: none;
+}
+
+.ds-battle-body {
+  flex: 1;
+  min-width: 0;
+}
+
+.ds-battle-name {
+  font-weight: 700;
+  font-size: 13.5px;
+  color: var(--ds-ash);
+}
+
+.ds-battle-vs {
+  font-size: 12px;
+  color: var(--ds-muted);
+  margin-top: 1px;
+}
+
+.ds-battle .ds-srank {
+  font-family: "Yuji Syuku", serif;
+  font-size: 26px;
+  color: var(--ds-line);
+  width: 30px;
+  text-align: center;
+  flex: none;
+}
+
+.ds-battle.done {
+  border-color: rgba(242, 108, 156, 0.5);
+}
+
+.ds-battle.done .ds-srank {
+  color: var(--ds-pink);
+  text-shadow: 0 0 12px rgba(242, 108, 156, 0.6);
+}
+
+/* long-form strategy notes */
+.ds-note {
+  margin-top: 14px;
+  border-top: 1px dashed var(--ds-line);
+  padding-top: 12px;
+  font-size: 13px;
+  color: #d8bfc2;
+  max-width: 76ch;
+}
+
+.ds-note h3 {
+  font-family: "Yuji Syuku", serif;
+  font-weight: 400;
+  font-size: 16px;
+  color: var(--ds-ember);
+  margin: 18px 0 6px;
+}
+
+.ds-note p {
+  margin: 0 0 10px;
+}
+
+.ds-note ul,
+.ds-note ol {
+  margin: 0 0 10px;
+  padding-left: 22px;
+}
+
+.ds-note li {
+  margin-bottom: 4px;
+}
+
+.ds-note strong {
+  color: var(--ds-ash);
+}
+
+.ds-note em {
+  color: var(--ds-muted);
+}
+
+.ds-note code {
+  font-family: ui-monospace, monospace;
+  font-size: 12px;
+  color: var(--ds-ember);
+  background: #0f0305;
+  border-radius: 4px;
+  padding: 1px 6px;
+}
+
+/* platinum strip */
+.ds-platrow {
+  margin-top: 18px;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  border: 1px solid var(--ds-line);
+  border-radius: 10px;
+  background: var(--ds-panel);
+  padding: 6px 16px 6px 6px;
+  font-size: 13px;
+  color: var(--ds-muted);
+}
+
+.ds-platrow b {
+  color: var(--ds-ash);
+}
+
+/* everything-else rail */
+.ds-rail {
+  margin-top: 18px;
+  border: 1px solid var(--ds-line);
+  border-radius: 10px;
+  background: var(--ds-panel);
+  padding: 12px 16px;
+}
+
+.ds-rail summary {
+  cursor: pointer;
+  font-size: 11px;
+  font-weight: 700;
+  letter-spacing: 0.22em;
+  text-transform: uppercase;
+  color: var(--ds-muted);
+  list-style: none;
+}
+
+.ds-rail summary::-webkit-details-marker {
+  display: none;
+}
+
+.ds-rail summary b {
+  color: var(--ds-pink);
+}
+
+.ds-rail-list {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px;
+  margin-top: 12px;
+}
+
+.ds-chip {
+  display: inline-flex;
+  align-items: center;
+  gap: 5px;
+  font-size: 11px;
+  color: var(--ds-muted);
+  border: 1px solid var(--ds-line);
+  border-radius: 4px;
+  padding: 3px 8px;
+}
+
+.ds-chip.earned {
+  color: #e8c9ce;
+  border-color: rgba(242, 108, 156, 0.35);
+}
+
+/* shared checkbox re-dress: earned = Nezuko pink */
+.ds2 .trophy-checkbox-box {
+  border-radius: 5px;
+  border-color: #5a232b;
+  background: #0f0305;
+}
+
+.ds2 .trophy-checkbox:hover .trophy-checkbox-box {
+  border-color: var(--ds-ember);
+}
+
+.ds2 .trophy-checkbox-box.is-checked {
+  background: var(--ds-pink);
+  border-color: var(--ds-pink);
+  color: #140406;
+}
+
+.ds2 .sync-indicator {
+  font-size: 11px;
+  text-transform: none;
+  letter-spacing: normal;
+}
+
+@media (max-width: 640px) {
+  .ds-header {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 18px;
+  }
+
+  .ds-jp {
+    display: none;
+  }
+}
