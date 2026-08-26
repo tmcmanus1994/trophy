@@ -749,6 +749,151 @@ button {
 }
 
 /* ---------------------------------------------------------------- */
+/* PSN Sync page                                                    */
+/* ---------------------------------------------------------------- */
+.sync-main {
+  max-width: 880px;
+  margin: 0 auto;
+  padding: 10px 24px 0;
+}
+
+.sync-help {
+  color: var(--ps-muted);
+}
+
+.sync-example {
+  background: var(--ps-surface);
+  border: 1px solid var(--ps-line);
+  border-radius: 10px;
+  padding: 12px 16px;
+  font-size: 0.85rem;
+  color: var(--ps-muted);
+  overflow-x: auto;
+}
+
+.sync-input {
+  width: 100%;
+  background: var(--ps-surface);
+  border: 1px solid var(--ps-line);
+  border-radius: 10px;
+  color: var(--ps-white);
+  font: inherit;
+  font-size: 0.92rem;
+  padding: 12px 16px;
+  resize: vertical;
+}
+
+.sync-input:focus {
+  outline: 2px solid var(--ps-blue-bright);
+  outline-offset: 1px;
+}
+
+.sync-actions {
+  display: flex;
+  gap: 10px;
+  margin-top: 16px;
+}
+
+.sync-button {
+  display: inline-flex;
+  align-items: center;
+  min-height: 44px;
+  padding: 0 22px;
+  border-radius: 999px;
+  background: var(--ps-blue);
+  color: var(--ps-white);
+  font-weight: 600;
+}
+
+.sync-button:hover {
+  background: var(--ps-blue-bright);
+}
+
+.sync-button:disabled {
+  opacity: 0.5;
+  cursor: default;
+}
+
+.sync-button-quiet {
+  background: transparent;
+  border: 1px solid var(--ps-line);
+  color: var(--ps-muted);
+}
+
+.sync-button-quiet:hover {
+  background: var(--ps-surface);
+  color: var(--ps-white);
+}
+
+.sync-game {
+  margin-top: 26px;
+}
+
+.sync-game h2 {
+  font-family: var(--font-display), sans-serif;
+  font-size: 1rem;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  border-left: 3px solid var(--accent);
+  padding-left: 12px;
+}
+
+.sync-list {
+  background: var(--ps-surface);
+  border: 1px solid var(--ps-line);
+  border-radius: 10px;
+  padding: 12px 18px;
+  margin-top: 10px;
+}
+
+.sync-list h3 {
+  margin: 0 0 6px;
+  font-size: 0.85rem;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+}
+
+.sync-list-mark h3 {
+  color: #3ecf6e;
+}
+
+.sync-list-unmatched h3 {
+  color: #ff6b7a;
+}
+
+.sync-list ul {
+  margin: 0;
+  padding-left: 20px;
+  font-size: 0.92rem;
+}
+
+.sync-note {
+  color: var(--ps-muted);
+  font-size: 0.88rem;
+  margin-top: 12px;
+}
+
+.sync-result p {
+  font-size: 1.05rem;
+}
+
+.library-footer {
+  margin-top: 56px;
+  text-align: center;
+}
+
+.library-footer a {
+  color: var(--ps-muted);
+  font-size: 0.85rem;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+}
+
+.library-footer a:hover {
+  color: var(--ps-blue-bright);
+}
+
+/* ---------------------------------------------------------------- */
 /* Small screens                                                    */
 /* ---------------------------------------------------------------- */
 @media (max-width: 560px) {

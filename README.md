@@ -50,6 +50,24 @@ starts tracking progress.
 Manual version: write `content/games/<slug>.md` following section 5 of the
 handoff, `npm run build` to validate, push.
 
+### Claude in Chrome (logged-in data)
+
+Two handoff prompts in [`docs/chrome/`](docs/chrome/) drive Claude in the
+Chrome extension, where you're logged into PSNProfiles:
+
+- **[`SYNC_HANDOFF.md`](docs/chrome/SYNC_HANDOFF.md)** — reads which
+  trophies you've earned for a game and produces a `TROPHY-SYNC` block; it
+  can paste and apply it on the site's **`/sync`** page for you. Additive
+  only: sync marks earned, never un-marks, and never touches sub-steps.
+- **[`NEW_GAME_HANDOFF.md`](docs/chrome/NEW_GAME_HANDOFF.md)** — full new
+  game intake: trophy list from PSNProfiles, roadmap from PowerPyx, your
+  earned status, and a design brief from the game's art. Outputs three
+  markdown blocks: the guide file (for Claude Code), the sync block (for
+  `/sync`), and the design brief (for the custom page pass).
+
+To use one: open the raw file on GitHub, copy it into Claude in Chrome
+along with the game name, and follow it from there.
+
 When a game deserves its own look: add
 `components/games/<slug>/Guide.tsx`, register it in
 `components/games/registry.ts`. Until then the default layout is used —

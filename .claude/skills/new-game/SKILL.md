@@ -26,9 +26,17 @@ Sources, in order of preference:
 Try `WebFetch` on both. **If the network policy blocks these domains**
 (remote sessions block anything not on the environment's allowlist), tell
 the user and ask them to either (a) add `psnprofiles.com` and
-`powerpyx.com` to the environment's allowed domains, or (b) paste the
-trophy list and roadmap text directly into the chat. Pasted content works
-exactly as well — never guess a trophy list from memory without flagging it.
+`powerpyx.com` to the environment's allowed domains, (b) run the
+Claude-in-Chrome handoff at `docs/chrome/NEW_GAME_HANDOFF.md` — it browses
+both sites logged-in and hands back a ready GUIDE FILE block plus a
+TROPHY-SYNC block (earned trophies, applied via the site's `/sync` page)
+and a DESIGN BRIEF block — or (c) paste the trophy list and roadmap text
+directly into the chat. All three work; never guess a trophy list from
+memory without flagging it.
+
+If the user provides a `TROPHY-SYNC` block here instead of using `/sync`,
+point them to the site's `/sync` page — that's what writes earned state to
+the database.
 
 Cross-check: trophy count and tier counts from PSNProfiles are ground
 truth. PowerPyx supplies `difficulty`, `hoursToPlat`, `playthroughs`,

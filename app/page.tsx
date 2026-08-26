@@ -1,3 +1,4 @@
+import Link from "next/link";
 import { getAllGames } from "@/lib/content";
 import { GameCard } from "@/components/library/GameCard";
 import { ProfileChip } from "@/components/library/ProfileChip";
@@ -72,6 +73,10 @@ export default function Library() {
             ))}
           </main>
         )}
+
+        <footer className="library-footer">
+          <Link href="/sync">PSN Sync</Link>
+        </footer>
       </div>
     </div>
   );
