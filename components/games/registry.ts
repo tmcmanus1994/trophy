@@ -5,6 +5,7 @@ import DispatchGuide from "./dispatch/Guide";
 import DetroitGuide from "./detroit-become-human/Guide";
 import LegoBatmanGuide from "./lego-batman-legacy-of-the-dark-knight/Guide";
 import DemonSlayerGuide from "./demon-slayer-hinokami-chronicles-2/Guide";
+import PragmataGuide from "./pragmata/Guide";
 
 /**
  * slug -> custom guide component. A game with no entry here still renders
@@ -16,6 +17,7 @@ export const guides: Record<string, ComponentType<GuideProps>> = {
   "detroit-become-human": DetroitGuide,
   "lego-batman-legacy-of-the-dark-knight": LegoBatmanGuide,
   "demon-slayer-hinokami-chronicles-2": DemonSlayerGuide,
+  pragmata: PragmataGuide,
 };
 
 export const getGuide = (slug: string): ComponentType<GuideProps> =>
