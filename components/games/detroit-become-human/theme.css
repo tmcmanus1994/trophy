@@ -1,0 +1,565 @@
+/* Detroit: Become Human — flowchart theme. Scoped under .dbh. */
+.dbh {
+  --accent: #2d7df6;
+  --dbh-night: #0b0e14;
+  --dbh-panel: #151a24;
+  --dbh-line: #232c3d;
+  --dbh-thirium: #2d7df6;
+  --dbh-thirium-soft: rgba(45, 125, 246, 0.45);
+  --dbh-porcelain: #edf1f6;
+  --dbh-grey: #97a1b3;
+  --dbh-amber: #f5c542;
+  --dbh-red: #e0322b;
+  --ring-track: var(--dbh-line);
+
+  min-height: 100vh;
+  background:
+    radial-gradient(110% 40% at 50% -5%, rgba(45, 125, 246, 0.12), transparent 70%),
+    var(--dbh-night);
+  color: var(--dbh-grey);
+  font-family: "Archivo", "Segoe UI", sans-serif;
+  font-size: 14.5px;
+  line-height: 1.5;
+  padding-bottom: 90px;
+}
+
+.dbh .wrap {
+  max-width: 900px;
+  margin: 0 auto;
+  padding: 0 20px;
+}
+
+.dbh-display {
+  font-family: "Exo 2", sans-serif;
+  text-transform: uppercase;
+  letter-spacing: 0.18em;
+}
+
+.dbh .dbh-back {
+  display: inline-block;
+  color: var(--dbh-grey);
+  font-size: 11px;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  margin: 26px 0 20px;
+}
+
+.dbh .dbh-back:hover {
+  color: var(--dbh-thirium);
+}
+
+/* ------- header ------- */
+.dbh-header {
+  display: flex;
+  gap: 26px;
+  align-items: center;
+  border: 1px solid var(--dbh-line);
+  background: linear-gradient(180deg, var(--dbh-panel), #10151f);
+  border-radius: 12px;
+  padding: 26px 28px;
+}
+
+.dbh-header-info {
+  flex: 1;
+  min-width: 0;
+}
+
+.dbh-led {
+  display: inline-block;
+  width: 9px;
+  height: 9px;
+  border-radius: 50%;
+  background: var(--dbh-amber);
+  box-shadow: 0 0 8px var(--dbh-amber);
+  animation: dbh-led 1.6s ease infinite;
+  vertical-align: middle;
+  margin-right: 10px;
+}
+
+.dbh-led.calm {
+  background: var(--dbh-thirium);
+  box-shadow: 0 0 8px var(--dbh-thirium);
+  animation: none;
+}
+
+@keyframes dbh-led {
+  50% {
+    opacity: 0.35;
+  }
+}
+
+.dbh-eyebrow {
+  font-size: 10.5px;
+  color: var(--dbh-grey);
+  letter-spacing: 0.28em;
+  text-transform: uppercase;
+  margin-bottom: 8px;
+}
+
+.dbh-title {
+  font-family: "Exo 2", sans-serif;
+  font-weight: 700;
+  font-size: clamp(20px, 4.2vw, 32px);
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: var(--dbh-porcelain);
+  margin: 0;
+  line-height: 1.2;
+}
+
+.dbh-plat {
+  display: flex;
+  align-items: center;
+  gap: 7px;
+  margin-top: 8px;
+  font-size: 12.5px;
+  letter-spacing: 0.1em;
+  color: #9fc4e8;
+}
+
+.dbh-meta {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px 24px;
+  margin: 16px 0 0;
+  font-size: 12px;
+}
+
+.dbh-meta span {
+  color: var(--dbh-grey);
+}
+
+.dbh-meta b {
+  color: var(--dbh-porcelain);
+  font-weight: 600;
+}
+
+.dbh-tiers {
+  display: flex;
+  gap: 14px;
+  margin-top: 12px;
+  font-size: 12.5px;
+  font-variant-numeric: tabular-nums;
+}
+
+.dbh-tiers span {
+  display: inline-flex;
+  align-items: center;
+  gap: 5px;
+  color: var(--dbh-porcelain);
+}
+
+.dbh-ring-label {
+  font-size: 15px;
+  font-weight: 600;
+  color: var(--dbh-porcelain);
+}
+
+/* ------- sticky strip ------- */
+.dbh-sticky {
+  position: sticky;
+  top: 0;
+  z-index: 20;
+  margin-top: 18px;
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  border-top: 1px solid var(--dbh-line);
+  border-bottom: 1px solid var(--dbh-line);
+  background: rgba(11, 14, 20, 0.85);
+  backdrop-filter: blur(10px);
+  padding: 8px 4px;
+  font-size: 12px;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+}
+
+.dbh-sticky b {
+  color: var(--dbh-porcelain);
+  font-variant-numeric: tabular-nums;
+}
+
+.dbh-sticky .spacer {
+  flex: 1;
+}
+
+/* ------- remaining objectives ------- */
+.dbh-remaining {
+  margin-top: 22px;
+  border: 1px solid var(--dbh-line);
+  border-radius: 10px;
+  background: var(--dbh-panel);
+  padding: 14px 18px;
+}
+
+.dbh-remaining h2 {
+  font-size: 11px;
+  letter-spacing: 0.24em;
+  color: var(--dbh-amber);
+  margin: 0 0 10px;
+}
+
+.dbh-remaining-list {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+}
+
+.dbh-chip {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  border: 1px solid var(--dbh-line);
+  border-radius: 4px;
+  padding: 4px 10px;
+  font-size: 11.5px;
+  letter-spacing: 0.08em;
+  color: var(--dbh-porcelain);
+  background: #10151f;
+}
+
+.dbh-remaining-done {
+  color: var(--dbh-thirium);
+  font-size: 13px;
+  letter-spacing: 0.08em;
+}
+
+/* ------- intro ------- */
+.dbh-intro {
+  margin-top: 22px;
+  border-left: 2px solid var(--dbh-thirium);
+  padding: 4px 0 4px 18px;
+  color: var(--dbh-grey);
+  font-size: 13.5px;
+  max-width: 68ch;
+}
+
+.dbh-intro p {
+  margin: 0 0 10px;
+}
+
+.dbh-intro p:last-child {
+  margin: 0;
+}
+
+.dbh-intro strong {
+  color: var(--dbh-porcelain);
+}
+
+/* ------- phases + flowchart spine ------- */
+.dbh-phase {
+  margin-top: 40px;
+}
+
+.dbh-phase-head {
+  margin-bottom: 6px;
+}
+
+.dbh-phase-head h2 {
+  font-family: "Exo 2", sans-serif;
+  font-size: 14px;
+  font-weight: 600;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+  color: var(--dbh-porcelain);
+  margin: 0;
+}
+
+.dbh-phase-head p {
+  color: var(--dbh-grey);
+  font-size: 12.5px;
+  margin: 6px 0 0;
+  max-width: 64ch;
+}
+
+.dbh-phase-body {
+  position: relative;
+  margin-top: 16px;
+  padding-left: 4px;
+}
+
+/* the spine */
+.dbh-phase-body::before {
+  content: "";
+  position: absolute;
+  left: 17px;
+  top: 6px;
+  bottom: 6px;
+  width: 1px;
+  background: var(--dbh-line);
+}
+
+.dbh-row {
+  position: relative;
+  display: grid;
+  grid-template-columns: 28px 1fr;
+  gap: 0 14px;
+  margin-bottom: 12px;
+}
+
+/* connector from spine to card */
+.dbh-row::before {
+  content: "";
+  position: absolute;
+  left: 17px;
+  top: 26px;
+  width: 24px;
+  height: 1px;
+  background: var(--dbh-line);
+}
+
+/* ------- nodes ------- */
+.dbh-node {
+  position: relative;
+  z-index: 1;
+  width: 13px;
+  height: 13px;
+  margin: 20px auto 0;
+  border: 1.5px dashed var(--dbh-grey);
+  border-radius: 50%;
+  background: var(--dbh-night);
+  flex: none;
+}
+
+.dbh-node.diamond {
+  border-radius: 2px;
+  transform: rotate(45deg);
+}
+
+.dbh-node.earned {
+  border-style: solid;
+  border-color: var(--dbh-thirium);
+  background: var(--dbh-thirium);
+  box-shadow: 0 0 10px var(--dbh-thirium-soft);
+}
+
+.dbh-node.offbranch {
+  border-style: dashed;
+  border-color: rgba(224, 50, 43, 0.55);
+  background: transparent;
+}
+
+/* ------- trophy cards ------- */
+.dbh-card {
+  border: 1px solid var(--dbh-line);
+  border-radius: 10px;
+  background: var(--dbh-panel);
+  padding: 10px 16px 12px 6px;
+  display: flex;
+  gap: 4px;
+  align-items: flex-start;
+  transition: border-color 0.15s, opacity 0.2s;
+}
+
+.dbh-card:hover {
+  border-color: #34415c;
+}
+
+/* missable = persistent red edge, not a badge */
+.dbh-card.missable {
+  border-left: 3px solid var(--dbh-red);
+}
+
+.dbh-card.earned {
+  opacity: 0.6;
+}
+
+.dbh-card.earned .dbh-name {
+  color: var(--dbh-thirium);
+}
+
+.dbh-card.offbranch {
+  opacity: 0.55;
+  border-style: dashed;
+}
+
+.dbh-card-body {
+  flex: 1;
+  min-width: 0;
+  padding-top: 8px;
+}
+
+.dbh-name {
+  font-family: "Exo 2", sans-serif;
+  font-weight: 600;
+  font-size: 13px;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: var(--dbh-porcelain);
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  flex-wrap: wrap;
+}
+
+.dbh-desc {
+  margin: 3px 0 0;
+  font-size: 12.5px;
+  color: var(--dbh-grey);
+}
+
+.dbh-note {
+  margin-top: 8px;
+  font-size: 12px;
+  color: var(--dbh-grey);
+  background: #10151f;
+  border-radius: 6px;
+  padding: 8px 12px;
+}
+
+.dbh-note p {
+  margin: 0 0 6px;
+}
+
+.dbh-note p:last-child {
+  margin: 0;
+}
+
+.dbh-note strong {
+  color: var(--dbh-amber);
+}
+
+.dbh-note em {
+  color: var(--dbh-porcelain);
+  font-style: normal;
+}
+
+/* ------- steps ------- */
+.dbh-steps {
+  list-style: none;
+  margin: 8px 0 0;
+  padding: 0 0 0 2px;
+  border-left: 1px dashed var(--dbh-line);
+}
+
+.dbh-steps li {
+  display: flex;
+  align-items: center;
+  gap: 2px;
+  font-size: 12.5px;
+}
+
+.dbh-steps li.done span {
+  text-decoration: line-through;
+  color: var(--dbh-grey);
+}
+
+/* ------- fork rows ------- */
+.dbh-fork {
+  display: flex;
+  flex-direction: column;
+  gap: 0;
+}
+
+.dbh-fork-link {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 2px 0 2px 30px;
+  font-size: 10px;
+  letter-spacing: 0.22em;
+  text-transform: uppercase;
+  color: var(--dbh-grey);
+}
+
+.dbh-fork-link::before {
+  content: "";
+  width: 1px;
+  height: 14px;
+  margin-left: -16px;
+  background: var(--dbh-line);
+}
+
+.dbh-partner {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  border: 1px dashed var(--dbh-line);
+  border-radius: 8px;
+  background: transparent;
+  padding: 8px 14px;
+  margin-left: 30px;
+  font-size: 12px;
+}
+
+.dbh-partner .dbh-node {
+  margin: 0;
+  width: 11px;
+  height: 11px;
+}
+
+.dbh-partner-name {
+  font-family: "Exo 2", sans-serif;
+  font-size: 11.5px;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: var(--dbh-porcelain);
+}
+
+.dbh-partner-state {
+  margin-left: auto;
+  font-size: 10.5px;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: var(--dbh-grey);
+  white-space: nowrap;
+}
+
+.dbh-partner.earned {
+  border-style: solid;
+  border-color: var(--dbh-thirium-soft);
+}
+
+.dbh-partner.earned .dbh-partner-state {
+  color: var(--dbh-thirium);
+}
+
+.dbh-partner.offbranch {
+  border-color: rgba(224, 50, 43, 0.4);
+}
+
+.dbh-partner.offbranch .dbh-partner-state {
+  color: var(--dbh-red);
+}
+
+/* shared checkbox re-dress */
+.dbh .trophy-checkbox-box {
+  border-radius: 3px;
+  border-color: #3d4a63;
+  background: #10151f;
+}
+
+.dbh .trophy-checkbox:hover .trophy-checkbox-box {
+  border-color: var(--dbh-thirium);
+}
+
+.dbh .trophy-checkbox-box.is-checked {
+  background: var(--dbh-thirium);
+  border-color: var(--dbh-thirium);
+  color: var(--dbh-porcelain);
+}
+
+.dbh .sync-indicator {
+  font-size: 11px;
+  text-transform: none;
+  letter-spacing: normal;
+}
+
+@media (max-width: 620px) {
+  .dbh-header {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 18px;
+  }
+
+  .dbh-sticky {
+    flex-wrap: wrap;
+    gap: 8px 14px;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .dbh-led {
+    animation: none;
+  }
+}
