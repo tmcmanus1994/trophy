@@ -10,6 +10,17 @@ const idSchema = z
 const stepSchema = z.object({
   id: idSchema,
   text: z.string().min(1),
+  // Optional richer fields for checklist-heavy trophies (one-off guides):
+  detail: z.string().optional(),   // sub-description under the text
+  code: z.string().optional(),     // password / input sequence
+  tags: z.array(z.string().min(1)).optional(),
+  group: idSchema.optional(),      // references the trophy's stepGroups
+});
+
+const stepGroupSchema = z.object({
+  id: idSchema,
+  title: z.string().min(1),
+  summary: z.string().optional(),
 });
 
 const trophySchema = z.object({
@@ -21,6 +32,7 @@ const trophySchema = z.object({
   missable: z.boolean().default(false),
   dlc: z.boolean().default(false),
   requires: z.array(idSchema).default([]),
+  stepGroups: z.array(stepGroupSchema).optional(),
   steps: z.array(stepSchema).optional(),
   note: z.string().optional(),
 });
@@ -91,6 +103,7 @@ export const gameFrontMatterSchema = z
       }
       if (t.steps) {
         const stepIds = new Set<string>();
+        const groupIds = new Set((t.stepGroups ?? []).map((g) => g.id));
         for (const s of t.steps) {
           if (stepIds.has(s.id)) {
             ctx.addIssue({
@@ -100,6 +113,13 @@ export const gameFrontMatterSchema = z
             });
           }
           stepIds.add(s.id);
+          if (s.group && !groupIds.has(s.group)) {
+            ctx.addIssue({
+              code: z.ZodIssueCode.custom,
+              message: `trophy "${t.id}" step "${s.id}" references unknown group "${s.group}"`,
+              path: ["trophies"],
+            });
+          }
         }
       }
     }

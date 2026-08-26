@@ -3,6 +3,16 @@ export type TrophyType = "bronze" | "silver" | "gold" | "platinum";
 export interface TrophyStep {
   id: string;
   text: string;
+  detail?: string;
+  code?: string;
+  tags?: string[];
+  group?: string;
+}
+
+export interface StepGroup {
+  id: string;
+  title: string;
+  summary?: string;
 }
 
 export interface Trophy {
@@ -14,6 +24,7 @@ export interface Trophy {
   missable: boolean;
   dlc: boolean;
   requires: string[];
+  stepGroups?: StepGroup[];
   steps?: TrophyStep[];
   note?: string;
 }

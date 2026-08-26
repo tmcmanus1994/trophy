@@ -628,6 +628,16 @@ button {
   font-size: 0.9rem;
 }
 
+.trophy-step-detail {
+  color: var(--ps-muted);
+}
+
+.trophy-step-code {
+  display: block;
+  color: var(--accent);
+  font-size: 0.82rem;
+}
+
 .trophy-note {
   margin-top: 10px;
   padding: 10px 14px;

@@ -1,6 +1,7 @@
 import type { ComponentType } from "react";
 import type { GuideProps } from "@/lib/types";
 import DefaultGuide from "./_default/Guide";
+import DispatchGuide from "./dispatch/Guide";
 
 /**
  * slug -> custom guide component. A game with no entry here still renders
@@ -8,7 +9,7 @@ import DefaultGuide from "./_default/Guide";
  * is an upgrade, never a prerequisite.
  */
 export const guides: Record<string, ComponentType<GuideProps>> = {
-  // 'elden-ring': EldenRingGuide,
+  dispatch: DispatchGuide,
 };
 
 export const getGuide = (slug: string): ComponentType<GuideProps> =>

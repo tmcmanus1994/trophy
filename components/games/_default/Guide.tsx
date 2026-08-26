@@ -233,7 +233,13 @@ function TrophyRow({
                     label={s.text}
                     small
                   />
-                  <span className="trophy-step-text">{s.text}</span>
+                  <span className="trophy-step-text">
+                    {s.text}
+                    {s.detail && (
+                      <span className="trophy-step-detail"> — {s.detail}</span>
+                    )}
+                    {s.code && <code className="trophy-step-code">{s.code}</code>}
+                  </span>
                 </li>
               );
             })}

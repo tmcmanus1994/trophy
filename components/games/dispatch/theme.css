@@ -1,0 +1,398 @@
+/* Dispatch — SDN terminal theme. Scoped under .dispatch-guide. */
+.dispatch-guide {
+  --accent: #4fd8eb;
+  --dsp-bg: #0b1020;
+  --dsp-panel: #111a30;
+  --dsp-panel-2: #0e1628;
+  --dsp-line: #22314f;
+  --dsp-cyan: #4fd8eb;
+  --dsp-cyan-dim: #2a7f92;
+  --dsp-amber: #ffb454;
+  --dsp-red: #ff6b7a;
+  --dsp-text: #d9e4f5;
+  --dsp-muted: #7e8db0;
+  --dsp-done: #57e0a4;
+  --ring-track: var(--dsp-line);
+
+  min-height: 100vh;
+  background: var(--dsp-bg);
+  color: var(--dsp-text);
+  font-family: "IBM Plex Mono", ui-monospace, monospace;
+  font-size: 14px;
+  line-height: 1.55;
+  padding: 24px 16px 80px;
+  background-image:
+    linear-gradient(rgba(79, 216, 235, 0.03) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(79, 216, 235, 0.03) 1px, transparent 1px);
+  background-size: 32px 32px;
+}
+
+.dispatch-guide .wrap {
+  max-width: 820px;
+  margin: 0 auto;
+}
+
+.dispatch-guide .dsp-back {
+  color: var(--dsp-muted);
+  font-size: 12px;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  display: inline-block;
+  margin-bottom: 14px;
+}
+
+.dispatch-guide .dsp-back:hover {
+  color: var(--dsp-cyan);
+}
+
+/* ------- header ------- */
+.dispatch-guide .dsp-header {
+  border: 1px solid var(--dsp-line);
+  background: linear-gradient(180deg, var(--dsp-panel), var(--dsp-panel-2));
+  border-radius: 10px;
+  padding: 22px 20px 18px;
+  position: relative;
+  overflow: hidden;
+}
+
+.dispatch-guide .dsp-header::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background: repeating-linear-gradient(
+    0deg,
+    transparent 0 3px,
+    rgba(0, 0, 0, 0.12) 3px 4px
+  );
+  pointer-events: none;
+}
+
+.dispatch-guide .eyebrow {
+  color: var(--dsp-cyan);
+  letter-spacing: 0.22em;
+  font-size: 11px;
+  font-weight: 600;
+  text-transform: uppercase;
+  margin-bottom: 6px;
+}
+
+.dispatch-guide h1 {
+  font-family: "Chakra Petch", var(--font-display), sans-serif;
+  font-size: clamp(26px, 6vw, 40px);
+  letter-spacing: 0.03em;
+  color: #fff;
+  margin: 0;
+  text-shadow: 0 0 18px rgba(79, 216, 235, 0.35);
+}
+
+.dispatch-guide .sub {
+  color: var(--dsp-muted);
+  margin-top: 6px;
+  font-size: 13px;
+}
+
+/* ------- progress ------- */
+.dispatch-guide .progress {
+  margin-top: 18px;
+  border: 1px solid var(--dsp-line);
+  border-radius: 6px;
+  background: #0a0f1e;
+  padding: 12px 14px;
+  position: relative;
+  z-index: 1;
+}
+
+.dispatch-guide .progress-label {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  font-size: 12px;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: var(--dsp-muted);
+  margin-bottom: 8px;
+}
+
+.dispatch-guide .progress-label b {
+  color: var(--dsp-cyan);
+  font-weight: 600;
+}
+
+.dispatch-guide .progress-label b.complete {
+  color: var(--dsp-done);
+}
+
+.dispatch-guide .bar {
+  height: 14px;
+  border-radius: 3px;
+  background: #131d36;
+  overflow: hidden;
+  border: 1px solid var(--dsp-line);
+}
+
+.dispatch-guide .bar-fill {
+  height: 100%;
+  background: repeating-linear-gradient(
+    45deg,
+    var(--dsp-cyan) 0 10px,
+    #2fb3c7 10px 20px
+  );
+  box-shadow: 0 0 12px rgba(79, 216, 235, 0.5);
+  transition: width 0.35s ease;
+}
+
+.dispatch-guide .bar-fill.complete {
+  background: repeating-linear-gradient(
+    45deg,
+    var(--dsp-done) 0 10px,
+    #37b381 10px 20px
+  );
+  box-shadow: 0 0 14px rgba(87, 224, 164, 0.6);
+}
+
+.dispatch-guide .session-note {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 10px;
+  font-size: 11px;
+  color: var(--dsp-muted);
+  margin-top: 8px;
+}
+
+/* ------- trophy row ------- */
+.dispatch-guide .dsp-trophy {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  margin-top: 14px;
+  border: 1px solid var(--dsp-line);
+  border-radius: 8px;
+  background: var(--dsp-panel);
+  padding: 6px 14px 6px 4px;
+  position: relative;
+  z-index: 1;
+}
+
+.dispatch-guide .dsp-trophy.earned {
+  border-color: rgba(87, 224, 164, 0.45);
+}
+
+.dispatch-guide .dsp-trophy-name {
+  font-weight: 600;
+  color: #eaf2ff;
+  font-size: 13px;
+}
+
+.dispatch-guide .dsp-trophy-desc {
+  color: var(--dsp-muted);
+  font-size: 11.5px;
+}
+
+/* ------- alerts ------- */
+.dispatch-guide .alert {
+  border-left: 3px solid var(--dsp-amber);
+  background: rgba(255, 180, 84, 0.07);
+  border-radius: 0 6px 6px 0;
+  padding: 12px 14px;
+  margin-top: 16px;
+  font-size: 12.5px;
+  color: #e8d9bf;
+}
+
+.dispatch-guide .alert strong {
+  color: var(--dsp-amber);
+}
+
+.dispatch-guide .alert.cyan {
+  border-left-color: var(--dsp-cyan);
+  background: rgba(79, 216, 235, 0.06);
+  color: #c8e6ee;
+}
+
+.dispatch-guide .alert.cyan strong {
+  color: var(--dsp-cyan);
+}
+
+.dispatch-guide .alert p {
+  margin: 0 0 8px;
+}
+
+.dispatch-guide .alert p:last-child {
+  margin-bottom: 0;
+}
+
+/* ------- episodes ------- */
+.dispatch-guide .episode {
+  margin-top: 26px;
+}
+
+.dispatch-guide .ep-head {
+  display: flex;
+  align-items: baseline;
+  gap: 12px;
+  flex-wrap: wrap;
+  border-bottom: 1px solid var(--dsp-line);
+  padding-bottom: 8px;
+  margin-bottom: 10px;
+}
+
+.dispatch-guide .ep-head h2 {
+  font-family: "Chakra Petch", var(--font-display), sans-serif;
+  font-size: 17px;
+  color: #fff;
+  letter-spacing: 0.04em;
+  margin: 0;
+}
+
+.dispatch-guide .ep-num {
+  color: var(--dsp-cyan);
+  font-size: 13px;
+  letter-spacing: 0.15em;
+}
+
+.dispatch-guide .ep-count {
+  margin-left: auto;
+  font-size: 12px;
+  color: var(--dsp-muted);
+}
+
+.dispatch-guide .ep-count.done {
+  color: var(--dsp-done);
+}
+
+/* ------- hack items ------- */
+.dispatch-guide .hack {
+  display: flex;
+  gap: 4px;
+  align-items: flex-start;
+  border: 1px solid var(--dsp-line);
+  border-radius: 8px;
+  background: var(--dsp-panel);
+  padding: 6px 14px 10px 2px;
+  margin-bottom: 8px;
+  transition: border-color 0.15s, background 0.15s, opacity 0.2s;
+}
+
+.dispatch-guide .hack:hover {
+  border-color: var(--dsp-cyan-dim);
+}
+
+.dispatch-guide .hack.checked {
+  opacity: 0.55;
+  border-color: rgba(87, 224, 164, 0.35);
+}
+
+.dispatch-guide .hack.checked .hack-title {
+  text-decoration: line-through;
+  text-decoration-color: var(--dsp-done);
+}
+
+.dispatch-guide .hack.hot {
+  border-color: rgba(255, 107, 122, 0.45);
+  background: rgba(255, 107, 122, 0.05);
+}
+
+.dispatch-guide .hack.hot:hover {
+  border-color: var(--dsp-red);
+}
+
+.dispatch-guide .hack-body {
+  flex: 1;
+  min-width: 0;
+  padding-top: 10px;
+}
+
+.dispatch-guide .hack-title {
+  font-weight: 600;
+  color: #eaf2ff;
+  font-size: 13.5px;
+}
+
+.dispatch-guide .hack-title .idx {
+  color: var(--dsp-cyan);
+  margin-right: 6px;
+}
+
+.dispatch-guide .hack-desc {
+  color: var(--dsp-muted);
+  font-size: 12.5px;
+  margin-top: 3px;
+}
+
+.dispatch-guide .pw {
+  color: var(--dsp-cyan);
+  font-size: 12px;
+  margin-top: 4px;
+  letter-spacing: 0.04em;
+}
+
+.dispatch-guide .pw::before {
+  content: "↳ password: ";
+  color: var(--dsp-muted);
+}
+
+.dispatch-guide .tags {
+  display: flex;
+  gap: 6px;
+  flex-wrap: wrap;
+  margin-top: 6px;
+}
+
+.dispatch-guide .tag {
+  font-size: 10px;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  padding: 2px 7px;
+  border-radius: 3px;
+  border: 1px solid;
+  font-weight: 600;
+}
+
+.dispatch-guide .tag.story {
+  color: var(--dsp-cyan);
+  border-color: rgba(79, 216, 235, 0.4);
+}
+
+.dispatch-guide .tag.missable {
+  color: var(--dsp-amber);
+  border-color: rgba(255, 180, 84, 0.5);
+}
+
+.dispatch-guide .tag.danger {
+  color: var(--dsp-red);
+  border-color: rgba(255, 107, 122, 0.5);
+}
+
+.dispatch-guide .tag.timed {
+  color: #b8a6ff;
+  border-color: rgba(184, 166, 255, 0.45);
+}
+
+/* Shared checkbox, re-dressed for the terminal */
+.dispatch-guide .trophy-checkbox-box {
+  border-radius: 4px;
+  border-color: var(--dsp-cyan-dim);
+  background: #0a0f1e;
+}
+
+.dispatch-guide .trophy-checkbox:hover .trophy-checkbox-box {
+  border-color: var(--dsp-cyan);
+}
+
+.dispatch-guide .trophy-checkbox-box.is-checked {
+  background: rgba(87, 224, 164, 0.12);
+  border-color: var(--dsp-done);
+  color: var(--dsp-done);
+}
+
+.dispatch-guide .sync-indicator {
+  font-size: 11px;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .dispatch-guide .bar-fill,
+  .dispatch-guide .hack {
+    transition: none;
+  }
+}
