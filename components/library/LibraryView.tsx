@@ -69,14 +69,21 @@ export function LibraryView({ games }: { games: Game[] }) {
   const pinnedGame =
     games.find((g) => g.slug === prefs.pinned) ?? null;
 
-  const visible = useMemo(() => {
-    const rest = games.filter((g) => g.slug !== prefs.pinned);
-    const filtered = rest.filter((g) => {
-      if (prefs.filter === "active") return !isComplete(g.slug);
-      if (prefs.filter === "completed") return isComplete(g.slug);
+  /* Every card stays mounted; filtering only hides via CSS. Unmounting
+     resets a card's progress state for a frame, which made borderline
+     games flicker in and out of the filtered views. */
+  const shows = useCallback(
+    (slug: string) => {
+      if (prefs.filter === "active") return !isComplete(slug);
+      if (prefs.filter === "completed") return isComplete(slug);
       return true;
-    });
-    const sorted = [...filtered];
+    },
+    [prefs.filter, isComplete]
+  );
+
+  const ordered = useMemo(() => {
+    const rest = games.filter((g) => g.slug !== prefs.pinned);
+    const sorted = [...rest];
     if (prefs.sort === "title") {
       sorted.sort((a, b) => a.title.localeCompare(b.title));
     } else if (prefs.sort === "completion") {
@@ -93,7 +100,11 @@ export function LibraryView({ games }: { games: Game[] }) {
       });
     }
     return sorted;
-  }, [games, prefs, stats, isComplete]);
+  }, [games, prefs.pinned, prefs.sort, stats]);
+
+  const anyShown =
+    ordered.some((g) => shows(g.slug)) ||
+    (pinnedGame !== null && prefs.filter !== "completed");
 
   const togglePin = (slug: string) =>
     update({ pinned: prefs.pinned === slug ? null : slug });
@@ -141,46 +152,37 @@ export function LibraryView({ games }: { games: Game[] }) {
         </div>
       </div>
 
-      {pinnedGame && prefs.filter !== "completed" && (
+      {pinnedGame && (
         <GameCard
           game={pinnedGame}
           featured
           pinned
+          hidden={prefs.filter === "completed" && !isComplete(pinnedGame.slug)}
           onTogglePin={() => togglePin(pinnedGame.slug)}
           onStats={onStats}
         />
       )}
 
-      {visible.length === 0 && !pinnedGame ? (
+      {!anyShown && (
         <p className="library-empty-filter">
           {prefs.filter === "completed"
             ? "Nothing completed yet — the trophy case is waiting."
             : "Nothing in progress. Time to add a game."}
         </p>
-      ) : (
-        <main className="library-grid">
-          {visible.map((game) => (
-            <GameCard
-              key={game.slug}
-              game={game}
-              pinned={false}
-              onTogglePin={() => togglePin(game.slug)}
-              onStats={onStats}
-            />
-          ))}
-        </main>
       )}
 
-      {/* Completed games hidden by the filter still need their stats
-          reported so counts stay right — render them invisibly. */}
-      {prefs.filter !== "all" &&
-        games
-          .filter((g) => g.slug !== prefs.pinned && !visible.includes(g))
-          .map((g) => (
-            <div key={g.slug} style={{ display: "none" }}>
-              <GameCard game={g} onStats={onStats} />
-            </div>
-          ))}
+      <main className="library-grid">
+        {ordered.map((game) => (
+          <GameCard
+            key={game.slug}
+            game={game}
+            pinned={false}
+            hidden={!shows(game.slug)}
+            onTogglePin={() => togglePin(game.slug)}
+            onStats={onStats}
+          />
+        ))}
+      </main>
     </>
   );
 }

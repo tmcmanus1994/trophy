@@ -32,12 +32,15 @@ export function GameCard({
   game,
   featured = false,
   pinned = false,
+  hidden = false,
   onTogglePin,
   onStats,
 }: {
   game: Game;
   featured?: boolean;
   pinned?: boolean;
+  /** Hide via CSS instead of unmounting, so progress state stays warm. */
+  hidden?: boolean;
   onTogglePin?: () => void;
   onStats?: (slug: string, stats: GameStats) => void;
 }) {
@@ -79,9 +82,13 @@ export function GameCard({
     </button>
   );
 
+  const wrapStyle = hidden
+    ? { ...accentStyle, display: "none" }
+    : accentStyle;
+
   if (featured) {
     return (
-      <div className="game-card-wrap featured" style={accentStyle}>
+      <div className="game-card-wrap featured" style={wrapStyle}>
         <Link href={`/g/${game.slug}`} className="game-card game-card--featured">
           <div className="featured-cover" />
           <div className="featured-body">
@@ -112,7 +119,7 @@ export function GameCard({
   }
 
   return (
-    <div className="game-card-wrap" style={accentStyle}>
+    <div className="game-card-wrap" style={wrapStyle}>
       <Link href={`/g/${game.slug}`} className="game-card">
         <div className="game-card-cover">
           {game.coverImage ? (
