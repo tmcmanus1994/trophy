@@ -274,6 +274,15 @@ export function useProgress(gameSlug: string, trophies: Trophy[] = []) {
     [applyLocal, pushEntry]
   );
 
+  /** ISO timestamp of the most recent progress write for this game. */
+  const lastUpdated = useMemo(() => {
+    let max = "";
+    for (const entry of Object.values(progress)) {
+      if (entry.updated_at > max) max = entry.updated_at;
+    }
+    return max || null;
+  }, [progress]);
+
   const completion: Completion = useMemo(() => {
     const byType = Object.fromEntries(
       TYPES.map((t) => [t, { earned: 0, total: 0 }])
@@ -295,5 +304,5 @@ export function useProgress(gameSlug: string, trophies: Trophy[] = []) {
     };
   }, [trophies, progress]);
 
-  return { isDone, toggle, getValue, setValue, completion, syncState };
+  return { isDone, toggle, getValue, setValue, completion, syncState, lastUpdated };
 }

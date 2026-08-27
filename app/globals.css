@@ -235,9 +235,125 @@ button {
   color: var(--ps-blue-bright);
 }
 
+.library-controls {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+  justify-content: center;
+  margin-bottom: 24px;
+}
+
+.library-empty-filter {
+  text-align: center;
+  color: var(--ps-muted);
+  border: 1px dashed var(--ps-line);
+  border-radius: 14px;
+  padding: 40px 24px;
+}
+
 /* ---------------------------------------------------------------- */
 /* Game card                                                        */
 /* ---------------------------------------------------------------- */
+.game-card-wrap {
+  position: relative;
+}
+
+.game-card-wrap.featured {
+  margin-bottom: 20px;
+}
+
+.game-pin {
+  position: absolute;
+  top: 6px;
+  right: 6px;
+  z-index: 2;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  min-width: 44px;
+  min-height: 44px;
+  border-radius: 10px;
+  color: var(--ps-muted);
+  opacity: 0.6;
+  transition: color 0.15s ease, opacity 0.15s ease;
+}
+
+.game-card-wrap:hover .game-pin,
+.game-pin.is-pinned {
+  opacity: 1;
+}
+
+.game-pin:hover {
+  color: var(--ps-blue-bright);
+}
+
+.game-pin.is-pinned {
+  color: var(--ps-blue-bright);
+}
+
+/* featured "Now playing" card */
+.game-card.game-card--featured {
+  display: flex;
+  align-items: center;
+  gap: 24px;
+  padding: 22px 28px;
+  background:
+    radial-gradient(80% 160% at 0% 0%, color-mix(in srgb, var(--accent) 26%, transparent), transparent 60%),
+    var(--ps-surface);
+  border: 1px solid color-mix(in srgb, var(--accent) 45%, var(--ps-line));
+}
+
+.game-card.game-card--featured:hover {
+  border-color: var(--accent);
+}
+
+.featured-cover {
+  width: 10px;
+  align-self: stretch;
+  border-radius: 6px;
+  background: linear-gradient(var(--accent), color-mix(in srgb, var(--accent) 30%, transparent));
+  flex: none;
+}
+
+.featured-body {
+  flex: 1;
+  min-width: 0;
+}
+
+.featured-eyebrow {
+  font-family: var(--font-display), sans-serif;
+  font-size: 0.68rem;
+  letter-spacing: 0.3em;
+  text-transform: uppercase;
+  color: var(--accent);
+  margin: 0 0 6px;
+}
+
+.featured-title {
+  margin: 0;
+  font-size: 1.35rem;
+  font-weight: 600;
+  line-height: 1.2;
+}
+
+.featured-line {
+  margin: 8px 0 0;
+  color: var(--ps-muted);
+  font-size: 0.92rem;
+}
+
+.featured-line b {
+  color: var(--ps-white);
+}
+
+@media (max-width: 560px) {
+  .game-card--featured {
+    flex-wrap: wrap;
+    gap: 14px;
+  }
+}
+
+
 .game-card {
   display: block;
   background: var(--ps-surface);

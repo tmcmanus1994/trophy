@@ -1,6 +1,6 @@
 import Link from "next/link";
 import { getAllGames } from "@/lib/content";
-import { GameCard } from "@/components/library/GameCard";
+import { LibraryView } from "@/components/library/LibraryView";
 import { ProfileChip } from "@/components/library/ProfileChip";
 
 /* The four PlayStation button glyphs — the circle carries the hint of red. */
@@ -67,11 +67,7 @@ export default function Library() {
             </p>
           </div>
         ) : (
-          <main className="library-grid">
-            {games.map((game) => (
-              <GameCard key={game.slug} game={game} />
-            ))}
-          </main>
+          <LibraryView games={games} />
         )}
 
         <footer className="library-footer">
