@@ -50,6 +50,15 @@ export function useProgress(gameSlug: string, trophies: Trophy[] = []) {
   const progressRef = useRef(progress);
   progressRef.current = progress;
 
+  /* Undo history for user actions (toggle/setValue) on this page.
+     Sync and realtime updates never land here. */
+  const undoStack = useRef<Array<{ itemId: string; prev?: ProgressEntry }>>([]);
+
+  const recordUndo = useCallback((itemId: string) => {
+    undoStack.current.push({ itemId, prev: progressRef.current[itemId] });
+    if (undoStack.current.length > 50) undoStack.current.shift();
+  }, []);
+
   const applyLocal = useCallback(
     (updates: ProgressMap) => {
       setProgress((prev) => {
@@ -239,6 +248,7 @@ export function useProgress(gameSlug: string, trophies: Trophy[] = []) {
 
   const setValue = useCallback(
     (itemId: string, value: number) => {
+      recordUndo(itemId);
       const now = new Date().toISOString();
       const prev = progressRef.current[itemId];
       const entry: ProgressEntry = {
@@ -255,11 +265,12 @@ export function useProgress(gameSlug: string, trophies: Trophy[] = []) {
         entry
       );
     },
-    [applyLocal, pushEntry]
+    [applyLocal, pushEntry, recordUndo]
   );
 
   const toggle = useCallback(
     (itemId: string, itemType: string = itemId.includes("::") ? "step" : "trophy") => {
+      recordUndo(itemId);
       const now = new Date().toISOString();
       const nextDone = !progressRef.current[itemId]?.done;
       const entry: ProgressEntry = {
@@ -271,8 +282,45 @@ export function useProgress(gameSlug: string, trophies: Trophy[] = []) {
       applyLocal({ [itemId]: entry });
       void pushEntry(itemId, itemType, entry);
     },
-    [applyLocal, pushEntry]
+    [applyLocal, pushEntry, recordUndo]
   );
+
+  /** Revert the most recent toggle/setValue on this page (Cmd/Ctrl+Z). */
+  const undo = useCallback(() => {
+    const last = undoStack.current.pop();
+    if (!last) return false;
+    const now = new Date().toISOString();
+    const entry: ProgressEntry = last.prev
+      ? { ...last.prev, updated_at: now }
+      : { done: false, done_at: null, updated_at: now, source: "manual" };
+    applyLocal({ [last.itemId]: entry });
+    void pushEntry(
+      last.itemId,
+      last.itemId.includes("::") ? "step" : "trophy",
+      entry
+    );
+    return true;
+  }, [applyLocal, pushEntry]);
+
+  // Cmd/Ctrl+Z reverts the last action. Text inputs keep their native undo.
+  useEffect(() => {
+    const onKey = (e: KeyboardEvent) => {
+      if (!(e.metaKey || e.ctrlKey) || e.shiftKey) return;
+      if (e.key.toLowerCase() !== "z") return;
+      const target = e.target as HTMLElement | null;
+      if (
+        target &&
+        (target.tagName === "INPUT" ||
+          target.tagName === "TEXTAREA" ||
+          target.isContentEditable)
+      ) {
+        return;
+      }
+      if (undo()) e.preventDefault();
+    };
+    window.addEventListener("keydown", onKey);
+    return () => window.removeEventListener("keydown", onKey);
+  }, [undo]);
 
   /** ISO timestamp of the most recent progress write for this game. */
   const lastUpdated = useMemo(() => {
@@ -304,5 +352,5 @@ export function useProgress(gameSlug: string, trophies: Trophy[] = []) {
     };
   }, [trophies, progress]);
 
-  return { isDone, toggle, getValue, setValue, completion, syncState, lastUpdated };
+  return { isDone, toggle, getValue, setValue, undo, completion, syncState, lastUpdated };
 }
