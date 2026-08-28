@@ -1,0 +1,546 @@
+/* Black Myth: Wukong — lacquer, gold, cinnabar. */
+.bmw {
+  --accent: #c8912f;
+  --bm-lacquer: #0b0a09;
+  --bm-gold: #c8912f;
+  --bm-gold-bright: #e8b558;
+  --bm-cinnabar: #a8322d;
+  --bm-jade: #4a6b4e;
+  --bm-paper: #d9c9a8;
+  --bm-bronze: #6e4b2a;
+  --bm-panel: #14120f;
+  --bm-line: #2a251d;
+  --bm-muted: #9a8c74;
+  --ring-track: var(--bm-line);
+
+  min-height: 100vh;
+  background:
+    radial-gradient(80% 36% at 50% -4%, rgba(200, 145, 47, 0.1), transparent 70%),
+    var(--bm-lacquer);
+  color: var(--bm-paper);
+  font-family: "Fira Sans", "Segoe UI", sans-serif;
+  font-size: 14.5px;
+  line-height: 1.55;
+  padding-bottom: 100px;
+}
+
+.bmw .wrap {
+  max-width: 940px;
+  margin: 0 auto;
+  padding: 0 20px;
+  position: relative;
+}
+
+.bm-display {
+  font-family: "ZCOOL XiaoWei", serif;
+  letter-spacing: 0.2em;
+}
+
+.bmw .bm-back {
+  display: inline-block;
+  color: var(--bm-muted);
+  font-size: 11px;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  margin: 26px 0 18px;
+}
+
+.bmw .bm-back:hover {
+  color: var(--bm-gold-bright);
+}
+
+/* vertical CJK strip */
+.bm-cjk {
+  position: absolute;
+  top: 66px;
+  right: -4px;
+  writing-mode: vertical-rl;
+  font-family: "ZCOOL XiaoWei", serif;
+  font-size: 28px;
+  color: rgba(200, 145, 47, 0.3);
+  letter-spacing: 0.35em;
+  pointer-events: none;
+  user-select: none;
+}
+
+/* ------- header ------- */
+.bm-header {
+  display: flex;
+  align-items: center;
+  gap: 30px;
+  border: 1px solid var(--bm-bronze);
+  border-radius: 4px;
+  background: linear-gradient(180deg, #191510, var(--bm-panel));
+  padding: 28px 32px;
+}
+
+.bm-header-info {
+  flex: 1;
+  min-width: 0;
+}
+
+.bm-eyebrow {
+  color: var(--bm-muted);
+  font-size: 10.5px;
+  letter-spacing: 0.3em;
+  text-transform: uppercase;
+  margin-bottom: 10px;
+}
+
+.bm-title {
+  font-family: "ZCOOL XiaoWei", serif;
+  font-weight: 400;
+  font-size: clamp(24px, 4.6vw, 38px);
+  letter-spacing: 0.12em;
+  color: var(--bm-paper);
+  margin: 0;
+  line-height: 1.15;
+  text-shadow: 0 0 24px rgba(200, 145, 47, 0.35);
+}
+
+.bm-title em {
+  font-style: normal;
+  color: var(--bm-gold);
+}
+
+.bm-plat {
+  display: flex;
+  align-items: center;
+  gap: 7px;
+  margin-top: 10px;
+  font-size: 13px;
+  color: var(--bm-muted);
+}
+
+.bm-meta {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px 22px;
+  margin-top: 14px;
+  font-size: 12px;
+  color: var(--bm-muted);
+}
+
+.bm-meta b {
+  color: var(--bm-paper);
+}
+
+.bm-meta .cinnabar {
+  color: var(--bm-cinnabar);
+}
+
+.bm-tiers {
+  display: flex;
+  gap: 14px;
+  margin-top: 10px;
+  font-size: 12.5px;
+  font-variant-numeric: tabular-nums;
+}
+
+.bm-tiers span {
+  display: inline-flex;
+  align-items: center;
+  gap: 5px;
+}
+
+.bm-fillet-col {
+  flex: none;
+  text-align: center;
+}
+
+.bm-fillet-label {
+  margin-top: 6px;
+  font-size: 10.5px;
+  letter-spacing: 0.22em;
+  text-transform: uppercase;
+  color: var(--bm-muted);
+}
+
+.bm-fillet-label b {
+  color: var(--bm-gold-bright);
+}
+
+/* ------- sticky ------- */
+.bm-sticky {
+  position: sticky;
+  top: 0;
+  z-index: 20;
+  margin-top: 16px;
+  display: flex;
+  align-items: center;
+  gap: 18px;
+  border-top: 1px solid var(--bm-line);
+  border-bottom: 1px solid var(--bm-line);
+  background: rgba(11, 10, 9, 0.9);
+  backdrop-filter: blur(10px);
+  padding: 8px 6px;
+  font-size: 12px;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: var(--bm-muted);
+}
+
+.bm-sticky b {
+  color: var(--bm-gold-bright);
+}
+
+.bm-sticky .cinnabar {
+  color: var(--bm-cinnabar);
+}
+
+.bm-sticky .spacer {
+  flex: 1;
+}
+
+/* ------- intro ------- */
+.bm-intro {
+  margin-top: 20px;
+  border-left: 3px solid var(--bm-gold);
+  padding: 4px 0 4px 16px;
+  color: var(--bm-muted);
+  font-size: 13.5px;
+  max-width: 74ch;
+}
+
+.bm-intro p {
+  margin: 0 0 10px;
+}
+
+.bm-intro p:last-child {
+  margin: 0;
+}
+
+.bm-intro strong {
+  color: var(--bm-paper);
+}
+
+/* ------- phases ------- */
+.bm-phase {
+  margin-top: 36px;
+}
+
+.bm-phase-head h2 {
+  font-family: "ZCOOL XiaoWei", serif;
+  font-weight: 400;
+  font-size: 18px;
+  letter-spacing: 0.18em;
+  color: var(--bm-gold);
+  margin: 0;
+  border-left: 3px solid var(--bm-bronze);
+  padding-left: 14px;
+}
+
+.bm-phase-head p {
+  color: var(--bm-muted);
+  font-size: 13px;
+  margin: 8px 0 0 17px;
+  max-width: 70ch;
+}
+
+/* ------- NG+ gate ------- */
+.bm-gate {
+  margin-top: 44px;
+  border-top: 2px solid var(--bm-cinnabar);
+  border-bottom: 2px solid var(--bm-cinnabar);
+  background:
+    repeating-linear-gradient(
+      -45deg,
+      rgba(168, 50, 45, 0.09) 0 14px,
+      transparent 14px 28px
+    ),
+    #150c0b;
+  padding: 18px 22px;
+}
+
+.bm-gate h3 {
+  font-family: "ZCOOL XiaoWei", serif;
+  font-weight: 400;
+  font-size: 16px;
+  letter-spacing: 0.26em;
+  text-transform: uppercase;
+  color: var(--bm-cinnabar);
+  margin: 0 0 6px;
+}
+
+.bm-gate p {
+  margin: 0;
+  color: #cbb59a;
+  font-size: 13.5px;
+  max-width: 78ch;
+}
+
+/* ------- trophy cards ------- */
+.bm-rows {
+  margin-top: 14px;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.bm-card {
+  background: var(--bm-panel);
+  border: 1px solid var(--bm-line);
+  border-radius: 4px;
+  padding: 12px 18px 14px 8px;
+  display: flex;
+  gap: 6px;
+  align-items: flex-start;
+  position: relative;
+}
+
+/* cinnabar gutter mark for missables — persistent, unmistakable */
+.bm-card.missable {
+  border-left: 4px solid var(--bm-cinnabar);
+}
+
+.bm-card.missable::before {
+  content: "朱";
+  position: absolute;
+  left: -2px;
+  top: -9px;
+  font-family: "ZCOOL XiaoWei", serif;
+  font-size: 12px;
+  color: var(--bm-lacquer);
+  background: var(--bm-cinnabar);
+  padding: 0 4px;
+  border-radius: 2px;
+}
+
+.bm-card.earned {
+  opacity: 0.55;
+}
+
+.bm-card-body {
+  flex: 1;
+  min-width: 0;
+  padding-top: 8px;
+}
+
+.bm-name {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  flex-wrap: wrap;
+  font-family: "ZCOOL XiaoWei", serif;
+  font-size: 16px;
+  letter-spacing: 0.1em;
+  color: var(--bm-paper);
+}
+
+.bm-tag {
+  font-size: 9.5px;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+  padding: 1px 8px;
+  border-radius: 2px;
+  font-family: "Fira Sans", sans-serif;
+}
+
+.bm-tag.miss {
+  color: var(--bm-cinnabar);
+  border: 1px solid rgba(168, 50, 45, 0.6);
+}
+
+.bm-tag.ng {
+  color: var(--bm-jade);
+  border: 1px solid rgba(74, 107, 78, 0.7);
+}
+
+.bm-desc {
+  margin: 3px 0 0;
+  color: var(--bm-muted);
+  font-size: 12.5px;
+  font-style: italic;
+}
+
+.bm-note {
+  margin-top: 8px;
+  font-size: 12.5px;
+  color: #c4b295;
+  background: #100d0a;
+  border: 1px solid var(--bm-line);
+  border-radius: 4px;
+  padding: 9px 13px;
+  max-width: 78ch;
+}
+
+.bm-note p {
+  margin: 0 0 8px;
+}
+
+.bm-note p:last-child {
+  margin: 0;
+}
+
+.bm-note strong {
+  color: var(--bm-gold-bright);
+}
+
+.bm-steps {
+  margin-top: 8px;
+}
+
+.bm-step {
+  display: flex;
+  align-items: flex-start;
+  gap: 4px;
+  font-size: 13px;
+}
+
+.bm-step > span {
+  padding-top: 10px;
+}
+
+.bm-step.done > span {
+  text-decoration: line-through;
+  color: var(--bm-muted);
+}
+
+/* counter row inside steps */
+.bm-counter {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding-top: 5px;
+}
+
+.bm-count-input {
+  width: 56px;
+  min-height: 38px;
+  background: #0e0c09;
+  border: 1px solid var(--bm-bronze);
+  border-radius: 4px;
+  color: var(--bm-gold-bright);
+  font: inherit;
+  font-weight: 600;
+  text-align: center;
+  font-variant-numeric: tabular-nums;
+}
+
+.bm-count-input:focus {
+  outline: 2px solid var(--bm-gold);
+  outline-offset: 1px;
+}
+
+.bm-count-total {
+  color: var(--bm-muted);
+  font-size: 12.5px;
+  font-variant-numeric: tabular-nums;
+}
+
+.bm-count-total.full {
+  color: var(--bm-gold-bright);
+}
+
+.bm-plus {
+  min-width: 44px;
+  min-height: 38px;
+  border: 1px solid var(--bm-bronze);
+  border-radius: 4px;
+  background: #0e0c09;
+  color: var(--bm-gold-bright);
+  font-weight: 700;
+}
+
+.bm-plus:hover {
+  border-color: var(--bm-gold);
+}
+
+/* ------- earned rail ------- */
+.bm-rail {
+  margin-top: 26px;
+  background: var(--bm-panel);
+  border: 1px solid var(--bm-line);
+  border-radius: 4px;
+  padding: 12px 16px;
+}
+
+.bm-rail summary {
+  cursor: pointer;
+  font-size: 11px;
+  letter-spacing: 0.24em;
+  text-transform: uppercase;
+  color: var(--bm-muted);
+  list-style: none;
+}
+
+.bm-rail summary::-webkit-details-marker {
+  display: none;
+}
+
+.bm-rail summary b {
+  color: var(--bm-gold-bright);
+}
+
+.bm-rail-list {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
+  gap: 2px 16px;
+  margin-top: 10px;
+}
+
+.bm-rail-item {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  font-size: 12.5px;
+  color: var(--bm-muted);
+  border-bottom: 1px solid #1c1813;
+  padding: 1px 0;
+}
+
+.bm-rail-item .dot {
+  width: 6px;
+  height: 6px;
+  border-radius: 50%;
+  background: var(--bm-cinnabar);
+  flex: none;
+}
+
+.bm-rail-item .name {
+  flex: 1;
+  min-width: 0;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+/* shared checkbox re-dress */
+.bmw .trophy-checkbox-box {
+  border-radius: 50%;
+  border-color: var(--bm-bronze);
+  background: #0e0c09;
+}
+
+.bmw .trophy-checkbox:hover .trophy-checkbox-box {
+  border-color: var(--bm-gold);
+}
+
+.bmw .trophy-checkbox-box.is-checked {
+  background: var(--bm-gold);
+  border-color: var(--bm-gold);
+  color: var(--bm-lacquer);
+  box-shadow: 0 0 8px rgba(200, 145, 47, 0.45);
+}
+
+.bmw .sync-indicator {
+  font-size: 11px;
+  text-transform: none;
+  letter-spacing: normal;
+}
+
+@media (max-width: 720px) {
+  .bm-header {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 20px;
+  }
+
+  .bm-fillet-col {
+    align-self: center;
+  }
+
+  .bm-cjk {
+    display: none;
+  }
+}
