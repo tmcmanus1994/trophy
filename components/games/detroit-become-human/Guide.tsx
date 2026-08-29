@@ -1,283 +1,547 @@
 "use client";
 
 import "./theme.css";
-import { useMemo } from "react";
+import { useState } from "react";
 import Link from "next/link";
-import ReactMarkdown from "react-markdown";
 import { useProgress } from "@/lib/useProgress";
-import type { GuideProps, Trophy } from "@/lib/types";
-import { TrophyCheckbox } from "@/components/trophy/TrophyCheckbox";
-import { TrophyIcon } from "@/components/trophy/TrophyIcon";
-import { ProgressRing } from "@/components/trophy/ProgressRing";
+import type { GuideProps } from "@/lib/types";
 import { SyncIndicator } from "@/components/trophy/SyncIndicator";
+import {
+  SIX,
+  FIRST,
+  RUN1,
+  RUN2,
+  MAGS,
+  TRAPS,
+  CHAPTERS,
+  DEATH_IDS,
+  MAG_IDS,
+  TROPHY_GATES,
+  type PlanRow,
+  type PlanChapter,
+  type MagItem,
+} from "./data";
 
-/* Mutually exclusive branch pairs — [pacifist/first-run, machine-run]. */
-const FORKS: Array<[string, string]> = [
-  ["self-control", "defend-yourself"],
-  ["save-hank", "catch-it"],
-  ["doubts", "ruthless"],
-  ["send-a-message", "burn-the-place"],
-  ["stand-your-ground", "confrontation"],
-  ["kinship", "priorities"],
-  ["one-of-us", "compliant"],
-  ["safe-harbor", "escape-death"],
+/* Plan rows live in the progress DB as `plan::<id>` step entries; the six
+   trophy ids stay the real content ids so sync and library stats agree. */
+const pid = (id: string) => `plan::${id}`;
+
+const pillClass = (m: string) =>
+  m.startsWith("#")
+    ? "pill flag"
+    : /Death|Trophy|Platinum/.test(m)
+      ? "pill blue"
+      : "pill";
+
+type MagFilter = "all" | "todo" | "branch" | "r1" | "r2";
+
+const FILTERS: Array<[MagFilter, string]> = [
+  ["all", "All 46"],
+  ["todo", "Not yet read"],
+  ["branch", "Branch-locked"],
+  ["r1", "Run 01"],
+  ["r2", "Run 02"],
 ];
+
+function Row({
+  row,
+  done,
+  onToggle,
+}: {
+  row: PlanRow;
+  done: boolean;
+  onToggle: () => void;
+}) {
+  return (
+    <label className={`row ${row.k}${done ? " done" : ""}`}>
+      <input type="checkbox" checked={done} onChange={onToggle} />
+      <div>
+        <p className="txt" dangerouslySetInnerHTML={{ __html: row.txt }} />
+        {row.met && (
+          <p className="met">
+            {row.met.map((m) => (
+              <span key={m} className={pillClass(m)}>
+                {m}
+              </span>
+            ))}
+          </p>
+        )}
+        {row.why && <p className="why">{row.why}</p>}
+      </div>
+    </label>
+  );
+}
 
 export default function DetroitGuide({ game }: GuideProps) {
   const { isDone, toggle, completion, syncState } = useProgress(
     game.slug,
     game.trophies
   );
+  const [filter, setFilter] = useState<MagFilter>("all");
 
-  const byId = useMemo(
-    () => new Map(game.trophies.map((t) => [t.id, t])),
-    [game.trophies]
-  );
-  const partnerOf = useMemo(() => {
-    const m = new Map<string, string>();
-    for (const [a, b] of FORKS) {
-      m.set(a, b);
-      m.set(b, a);
+  const pDone = (id: string) => isDone(pid(id));
+  const pToggle = (id: string) => toggle(pid(id), "step");
+
+  /* A trophy counts as cleared once it's actually marked earned OR every
+     plan row gating it is checked (the platinum follows the other five). */
+  const gateCleared = (trophyId: string): boolean => {
+    if (isDone(trophyId)) return true;
+    if (trophyId === "detroit-master") {
+      return SIX.filter((s) => s.id !== "detroit-master").every((s) =>
+        gateCleared(s.id)
+      );
     }
-    return m;
-  }, []);
+    const gates = TROPHY_GATES[trophyId];
+    return !!gates && gates.every(pDone);
+  };
 
-  const remaining = game.trophies.filter((t) => !isDone(t.id));
-  const complete = remaining.length === 0;
-  const phases = game.phases ?? [];
+  const count = (ids: string[]) => ids.filter(pDone).length;
+  const mags = count(MAG_IDS);
+  const deaths = count(DEATH_IDS);
+  const troph = SIX.filter((t) => gateCleared(t.id)).length;
 
-  /* Node state: earned (blue), offbranch (partner taken, this one not — the
-     ghost path), open (dashed, still ahead of you). */
-  const nodeState = (t: Trophy) => {
-    if (isDone(t.id)) return "earned";
-    const p = partnerOf.get(t.id);
-    if (p && isDone(p)) return "offbranch";
-    return "open";
+  const r1Ids = RUN1.flatMap((c) => c.rows.map((r) => r.id));
+  const r2Ids = RUN2.flatMap((c) => c.rows.map((r) => r.id));
+
+  /* Overall % — real earned trophies plus any of the six whose gates are
+     fully checked but which haven't been marked earned yet. */
+  const effEarned =
+    completion.earned +
+    SIX.filter((t) => !isDone(t.id) && gateCleared(t.id)).length;
+  const overall =
+    completion.total === 0
+      ? 0
+      : Math.round((effEarned / completion.total) * 100);
+
+  const magVisible = (it: MagItem, groupRun: 1 | 2) => {
+    const run = it.run ?? groupRun;
+    switch (filter) {
+      case "todo":
+        return !pDone(`mag-${it.n}`);
+      case "branch":
+        return !!it.b;
+      case "r1":
+        return run === 1;
+      case "r2":
+        return run === 2;
+      default:
+        return true;
+    }
+  };
+
+  const renderChapter = (c: PlanChapter) => {
+    const act = c.rows.some((r) => r.k !== "magz");
+    return (
+      <div key={c.ch + c.name} className={`ch ${act ? "act" : "mag"}`}>
+        <div className="card brk">
+          <div className="ch-head">
+            <span className="ch-num">{c.ch}</span>
+            <span className="ch-name">{c.name}</span>
+            <span className="ch-who">{c.who}</span>
+          </div>
+          <div className="ch-body">
+            {c.rows.map((r) => (
+              <Row
+                key={r.id}
+                row={r}
+                done={pDone(r.id)}
+                onToggle={() => pToggle(r.id)}
+              />
+            ))}
+          </div>
+        </div>
+      </div>
+    );
   };
 
   return (
-    <div className="dbh">
+    <div className="dbh6">
       <link
         rel="stylesheet"
         precedence="default"
-        href="https://fonts.googleapis.com/css2?family=Exo+2:wght@500;600;700&family=Archivo:wght@400;500;600&display=swap"
+        href="https://fonts.googleapis.com/css2?family=Saira:wght@200;300;400;500;600&family=IBM+Plex+Sans:wght@400;500;600&family=IBM+Plex+Mono:wght@400;500&display=swap"
       />
       <div className="wrap">
-        <Link href="/" className="dbh-back">
-          ← Library
-        </Link>
+        <header>
+          <p className="eyebrow">
+            <Link href="/">← Trophy Room</Link> &nbsp;/&nbsp; {game.platform}{" "}
+            &nbsp;/&nbsp; {game.developer}, 2018
+          </p>
+          <div style={{ marginTop: 14 }}>
+            <p className="pct">
+              {overall}% <span>COMPLETE</span>
+            </p>
+            <div className="rule" />
+            <h1>
+              Detroit:
+              <br />
+              The Last Six
+            </h1>
+          </div>
+          <p className="sub">
+            Forty-three down. The story is finished and every fork you took is
+            locked into the flowchart — so this isn&rsquo;t a walkthrough,
+            it&rsquo;s a demolition plan for the six that are left. One hostile
+            playthrough clears four of them at once and quietly unlocks seven
+            branch-locked magazines on the way past.
+          </p>
 
-        <header className="dbh-header">
-          <div className="dbh-header-info">
-            <div className="dbh-eyebrow">
-              <span className={`dbh-led${complete ? " calm" : ""}`} />
-              {game.developer} // {game.platform} // Flowchart
-            </div>
-            <h1 className="dbh-title">{game.title}</h1>
-            {game.platinumName && (
-              <p className="dbh-plat">
-                <TrophyIcon type="platinum" size={15} /> {game.platinumName}
+          <div className="meters">
+            <div className="meter">
+              <p className="n">
+                <b>{troph}</b>/6
               </p>
-            )}
-            <div className="dbh-meta">
-              {game.difficulty != null && (
-                <span>
-                  Difficulty <b>{game.difficulty}/10</b>
-                </span>
-              )}
-              {game.hoursToPlat != null && (
-                <span>
-                  Hours <b>~{game.hoursToPlat}</b>
-                </span>
-              )}
-              {game.playthroughs != null && (
-                <span>
-                  Playthroughs <b>{game.playthroughs}</b>
-                </span>
-              )}
-              {game.missableCount != null && (
-                <span>
-                  Missable <b>{game.missableCount}</b>
-                </span>
-              )}
+              <p className="eyebrow l">Trophies cleared</p>
+              <span className="bar">
+                <i style={{ width: `${(troph / 6) * 100}%` }} />
+              </span>
             </div>
-            <div className="dbh-tiers">
-              {(["platinum", "gold", "silver", "bronze"] as const).map((type) =>
-                completion.byType[type].total > 0 ? (
-                  <span key={type}>
-                    <TrophyIcon type={type} size={14} />
-                    {completion.byType[type].earned}/{completion.byType[type].total}
-                  </span>
-                ) : null
-              )}
+            <div className="meter">
+              <p className="n">
+                <b>{mags}</b>/46
+              </p>
+              <p className="eyebrow l">Magazines read</p>
+              <span className="bar">
+                <i style={{ width: `${(mags / 46) * 100}%` }} />
+              </span>
+            </div>
+            <div className="meter">
+              <p className="n">
+                <b>{deaths}</b>/8
+              </p>
+              <p className="eyebrow l">Connor deaths</p>
+              <span className="bar">
+                <i style={{ width: `${(deaths / 8) * 100}%` }} />
+              </span>
+            </div>
+            <div className="meter" style={{ minWidth: "auto" }}>
+              <SyncIndicator state={syncState} />
             </div>
           </div>
-          <ProgressRing percent={completion.percent} size={92} stroke={5}>
-            <span className="dbh-ring-label">{completion.percent}%</span>
-          </ProgressRing>
         </header>
 
-        <div className="dbh-sticky">
-          <span className={`dbh-led${complete ? " calm" : ""}`} />
-          <span>
-            <b>
-              {completion.earned} / {completion.total}
-            </b>{" "}
-            collected
-          </span>
-          <span>
-            <b>{remaining.length}</b> remaining
-          </span>
-          <span className="spacer" />
-          <SyncIndicator state={syncState} />
-        </div>
-
-        <section className="dbh-remaining">
-          <h2 className="dbh-display">Remaining objectives</h2>
-          {complete ? (
-            <p className="dbh-remaining-done">
-              Software instability: none. Every branch resolved — {game.platinumName} secured.
-            </p>
-          ) : (
-            <div className="dbh-remaining-list">
-              {remaining.map((t) => (
-                <span key={t.id} className="dbh-chip">
-                  <TrophyIcon type={t.type} size={13} />
-                  {t.name}
-                </span>
-              ))}
-            </div>
-          )}
-        </section>
-
-        {game.intro && (
-          <div className="dbh-intro">
-            <ReactMarkdown>{game.intro}</ReactMarkdown>
-          </div>
-        )}
-
-        {phases.map((phase) => {
-          const phaseTrophies = game.trophies.filter((t) => t.phase === phase.id);
-          if (phaseTrophies.length === 0) return null;
-          return (
-            <section key={phase.id} className="dbh-phase">
-              <div className="dbh-phase-head">
-                <h2>{phase.title}</h2>
-                {phase.summary && <p>{phase.summary}</p>}
-              </div>
-              <div className="dbh-phase-body">
-                {phaseTrophies.map((t) => (
-                  <TrophyRow
-                    key={t.id}
-                    trophy={t}
-                    partner={partnerOf.get(t.id) ? byId.get(partnerOf.get(t.id)!) : undefined}
-                    state={nodeState(t)}
-                    partnerState={
-                      partnerOf.get(t.id)
-                        ? nodeState(byId.get(partnerOf.get(t.id)!)!)
-                        : undefined
-                    }
-                    isDone={isDone}
-                    toggle={toggle}
+        {/* ============ DO THIS FIRST ============ */}
+        <section>
+          <div className="first brk">
+            <p className="big mono">00</p>
+            <div>
+              <h2 style={{ fontSize: 20, marginBottom: 8 }}>
+                Do this before you launch anything
+              </h2>
+              <p style={{ marginBottom: 12 }}>
+                <b>THESE ARE OUR STORIES</b> is a menu chore, not a gameplay
+                trophy — it wants 20,000 bonus points <em>spent</em>, not
+                earned. You have three full playthroughs of banked points
+                sitting there.
+              </p>
+              <div className="ch-body">
+                {FIRST.map((r) => (
+                  <Row
+                    key={r.id}
+                    row={r}
+                    done={pDone(r.id)}
+                    onToggle={() => pToggle(r.id)}
                   />
                 ))}
               </div>
-            </section>
-          );
-        })}
-      </div>
-    </div>
-  );
-}
-
-function TrophyRow({
-  trophy: t,
-  partner,
-  state,
-  partnerState,
-  isDone,
-  toggle,
-}: {
-  trophy: Trophy;
-  partner?: Trophy;
-  state: string;
-  partnerState?: string;
-  isDone: (id: string) => boolean;
-  toggle: (id: string, type?: string) => void;
-}) {
-  const earned = isDone(t.id);
-  return (
-    <div className="dbh-row">
-      <span
-        className={`dbh-node ${state}${t.missable ? " diamond" : ""}`}
-        aria-hidden="true"
-      />
-      <div className="dbh-fork">
-        <div
-          className={`dbh-card${t.missable ? " missable" : ""}${
-            earned ? " earned" : state === "offbranch" ? " offbranch" : ""
-          }`}
-        >
-          <TrophyCheckbox
-            checked={earned}
-            onToggle={() => toggle(t.id, "trophy")}
-            label={t.name}
-            small
-          />
-          <div className="dbh-card-body">
-            <div className="dbh-name">
-              <TrophyIcon type={t.type} size={15} dim={!earned} />
-              {t.name}
             </div>
-            <p className="dbh-desc">{t.description}</p>
-            {t.steps && t.steps.length > 0 && (
-              <ul className="dbh-steps">
-                {t.steps.map((s) => {
-                  const sid = `${t.id}::${s.id}`;
-                  const sDone = isDone(sid);
-                  return (
-                    <li key={s.id} className={sDone ? "done" : ""}>
-                      <TrophyCheckbox
-                        checked={sDone}
-                        onToggle={() => toggle(sid, "step")}
-                        label={s.text}
-                        small
-                      />
-                      <span>{s.text}</span>
-                    </li>
-                  );
-                })}
-              </ul>
-            )}
-            {t.note && (
-              <div className="dbh-note">
-                <ReactMarkdown>{t.note}</ReactMarkdown>
-              </div>
-            )}
           </div>
-        </div>
+        </section>
 
-        {partner && (
-          <>
-            <div className="dbh-fork-link">fork — other branch</div>
-            <div className={`dbh-partner ${partnerState ?? "open"}`}>
-              <span
-                className={`dbh-node ${partnerState ?? "open"}${
-                  partner.missable ? " diamond" : ""
-                }`}
-                aria-hidden="true"
-              />
-              <span className="dbh-partner-name">{partner.name}</span>
-              <span className="dbh-partner-state">
-                {partnerState === "earned"
-                  ? "earned"
-                  : partnerState === "offbranch"
-                    ? "branch not taken yet"
-                    : "still open"}
-              </span>
+        {/* ============ THE SIX ============ */}
+        <section>
+          <div className="sec-head">
+            <p className="eyebrow">Remaining</p>
+            <h2>The Six</h2>
+            <span className="pill tag">{6 - troph} outstanding</span>
+          </div>
+          <div className="tgrid">
+            {SIX.map((t) => {
+              const cleared = gateCleared(t.id);
+              return (
+                <div
+                  key={t.id}
+                  className={`card brk trophy${cleared ? " cleared" : ""}`}
+                >
+                  <div className="top">
+                    <span className={`tier ${t.t}`} />
+                    <span className="nm">{t.n}</span>
+                    <label
+                      className="tchk"
+                      title={`Mark ${t.n} earned`}
+                    >
+                      <input
+                        type="checkbox"
+                        checked={isDone(t.id)}
+                        onChange={() => toggle(t.id, "trophy")}
+                        aria-label={`Mark ${t.n} earned`}
+                      />
+                    </label>
+                  </div>
+                  <p className="ds">{t.d}</p>
+                  <p className="wh">
+                    {t.w.map((w) => (
+                      <span key={w} className="pill">
+                        {w}
+                      </span>
+                    ))}
+                    {cleared && !isDone(t.id) && (
+                      <span className="pill done">Gates clear</span>
+                    )}
+                  </p>
+                </div>
+              );
+            })}
+          </div>
+        </section>
+
+        {/* ============ RUN 1 ============ */}
+        <section>
+          <div className="sec-head">
+            <p className="eyebrow">Run 01</p>
+            <h2>The Machine Run</h2>
+            <span className="pill tag blue">
+              {count(r1Ids)} / {r1Ids.length} steps
+            </span>
+          </div>
+
+          <div className="card brk" style={{ marginBottom: 22 }}>
+            <h3 style={{ marginBottom: 10 }}>Before you press New Story</h3>
+            <div className="ch-body">
+              <div className="row key" style={{ cursor: "default" }}>
+                <span />
+                <div>
+                  <p className="txt">
+                    <b>Start a fresh New Story on Experienced.</b> Not chapter
+                    select — I&rsquo;LL BE BACK needs one continuous run from
+                    The Hostage, and several of Connor&rsquo;s death states
+                    (the freeway collisions especially) are documented as
+                    Experienced-only. Casual auto-passes the QTEs you are
+                    deliberately trying to fail.
+                  </p>
+                </div>
+              </div>
+              <div className="row key" style={{ cursor: "default" }}>
+                <span />
+                <div>
+                  <p className="txt">
+                    <b>What this run is for:</b> I&rsquo;LL BE BACK, JUST A
+                    MACHINE, ESCAPE DEATH — plus every unconditional magazine
+                    and seven branch-locked ones. JUST A MACHINE <em>is</em>{" "}
+                    Connor death #5, so it costs you nothing extra.
+                  </p>
+                </div>
+              </div>
+              <div className="row warn" style={{ cursor: "default" }}>
+                <span />
+                <div>
+                  <p className="txt">
+                    <b>Ignore PowerPyx&rsquo;s time-saver.</b> Its roadmap
+                    tells you to let Kara and Alice die on the freeway to
+                    shorten the Connor run. That kills ESCAPE DEATH outright —
+                    dead Kara means no capture at Crossroads, no recall
+                    centre, no trophy. Keep Kara, Alice and Markus alive the
+                    whole way.
+                  </p>
+                </div>
+              </div>
             </div>
-          </>
-        )}
+          </div>
+
+          <div className="spine">{RUN1.map(renderChapter)}</div>
+        </section>
+
+        {/* ============ RUN 2 ============ */}
+        <section>
+          <div className="sec-head">
+            <p className="eyebrow">Run 02</p>
+            <h2>Two Short Chains</h2>
+            <span className="pill tag blue">
+              {count(r2Ids)} / {r2Ids.length} steps
+            </span>
+          </div>
+          <p className="sub" style={{ margin: "0 0 22px" }}>
+            Three magazines are mutually exclusive with the choices Run 01
+            forces on you. They don&rsquo;t need another full playthrough —
+            just two continuous chapter-select chains. <b>Continuous matters:</b>{" "}
+            the game reads the stored flowchart state, so jumping straight to
+            the chapter with the magazine won&rsquo;t spawn it. You have to
+            replay from the chapter that holds the decision.
+          </p>
+          <div className="spine">{RUN2.map(renderChapter)}</div>
+        </section>
+
+        {/* ============ MAGAZINES ============ */}
+        <section>
+          <div className="sec-head">
+            <p className="eyebrow">Bookworm</p>
+            <h2>The Magazine Ledger</h2>
+            <span className="pill tag flag">{mags} / 46</span>
+          </div>
+
+          <div className="card brk" style={{ marginBottom: 20 }}>
+            <h3 style={{ marginBottom: 9 }}>
+              Read this once, then never worry again
+            </h3>
+            <p style={{ fontSize: 14, color: "var(--ink-2)" }}>
+              There are only <b>24 physical magazines</b> in the game but{" "}
+              <b>46 collectible entries</b> — each object has two covers. On
+              PS4 you <b>swipe the touchpad right</b> to flip to the second
+              cover, and you must read <em>every page of both</em>. Half the
+              &ldquo;missing magazine&rdquo; panic online is people who picked
+              up all 24 objects and never swiped.
+            </p>
+            <p style={{ fontSize: 14, color: "var(--ink-2)", marginTop: 10 }}>
+              Check what you already have at{" "}
+              <b>Main Menu → Extras → Magazines</b>. It lists every entry by
+              publisher, so blanks are obvious. The trophy is{" "}
+              <b>cumulative across the save file</b>, not per-playthrough — it
+              is mathematically impossible to get all 46 in one run. Finish
+              the chapter after your last pickup; it pops on the flowchart
+              screen.
+            </p>
+          </div>
+
+          <div className="magbar">
+            <span className="eyebrow" style={{ marginRight: 4 }}>
+              Filter
+            </span>
+            {FILTERS.map(([f, label]) => (
+              <button
+                key={f}
+                type="button"
+                className="fbtn"
+                aria-pressed={filter === f}
+                onClick={() => setFilter(f)}
+              >
+                {label}
+              </button>
+            ))}
+          </div>
+
+          <div>
+            {MAGS.map((g) => {
+              const anyVisible = g.items.some((it) => magVisible(it, g.run));
+              return (
+                <div
+                  key={g.c}
+                  className={`mgroup${anyVisible ? "" : " hide"}`}
+                >
+                  <div className="mgroup-h">
+                    <span className="cn">{g.c}</span>
+                    <span className="ch-who">{g.who}</span>
+                    <span
+                      className={`pill${g.run === 2 ? " lock" : ""}`}
+                      style={{ marginLeft: "auto" }}
+                    >
+                      Run 0{g.run}
+                    </span>
+                  </div>
+                  <p className="mwhere">{g.where}</p>
+                  {g.items.map((it) => {
+                    const id = `mag-${it.n}`;
+                    const done = pDone(id);
+                    const visible = magVisible(it, g.run);
+                    return (
+                      <label
+                        key={it.n}
+                        className={`mrow${done ? " done" : ""}${visible ? "" : " hide"}`}
+                      >
+                        <input
+                          type="checkbox"
+                          checked={done}
+                          onChange={() => pToggle(id)}
+                        />
+                        <span className="no mono">#{it.n}</span>
+                        <span className="ti">
+                          {it.t}
+                          {it.b && <span className="bl">⚠ {it.b}</span>}
+                        </span>
+                      </label>
+                    );
+                  })}
+                </div>
+              );
+            })}
+          </div>
+        </section>
+
+        {/* ============ TRAPS ============ */}
+        <section>
+          <div className="sec-head">
+            <p className="eyebrow">Do not</p>
+            <h2>Run Killers</h2>
+          </div>
+          <div className="traps">
+            {TRAPS.map((t) => (
+              <div key={t.h} className="card trap">
+                <h3>{t.h}</h3>
+                <p>{t.p}</p>
+              </div>
+            ))}
+          </div>
+        </section>
+
+        {/* ============ CHAPTER STATE ============ */}
+        <section>
+          <div className="sec-head">
+            <p className="eyebrow">Your save</p>
+            <h2>Flowchart Coverage</h2>
+            <span className="pill tag">36 chapters</span>
+          </div>
+          <p className="sub" style={{ margin: "0 0 18px" }}>
+            Pulled from your flowchart screenshots. This doesn&rsquo;t gate
+            any trophy — it&rsquo;s the map of where the unexplored branches
+            actually are, if you ever want 100% flowchart completion after the
+            platinum.
+          </p>
+          <div className="scroller">
+            <table className="cctable">
+              <thead>
+                <tr>
+                  <th>Chapter</th>
+                  <th style={{ width: "44%" }}>Explored</th>
+                  <th style={{ textAlign: "right" }}>%</th>
+                </tr>
+              </thead>
+              <tbody>
+                {CHAPTERS.map(([n, p]) => (
+                  <tr key={n}>
+                    <td>{n}</td>
+                    <td>
+                      <span className={`ccbar${p < 40 ? " low" : ""}`}>
+                        <i style={{ width: `${p}%` }} />
+                      </span>
+                    </td>
+                    <td style={{ textAlign: "right" }}>
+                      <span className="ccnum">{p}%</span>
+                    </td>
+                  </tr>
+                ))}
+              </tbody>
+            </table>
+          </div>
+          <p className="note">
+            Two chapters sit at 0%: <b>Night of the Soul — Connor</b> and{" "}
+            <b>Battle for Detroit — Connor&rsquo;s Last Mission</b>. Both open
+            up on the machine-Connor path this run puts you on.
+          </p>
+        </section>
+
+        <footer>
+          <p>
+            Compiled from PSNProfiles (earned state, 26 Dec 2025),
+            PowerPyx&rsquo;s roadmap and per-chapter walkthroughs, GamerGuides,
+            the Detroit: Become Human wiki, and 36 flowchart screenshots from
+            your save. Where sources disagreed — the Connor death count
+            especially — the page follows the guide that actually enumerates
+            its list.
+          </p>
+          <p style={{ marginTop: 8 }}>
+            Every checkbox syncs to your Trophy Room account across devices.
+            Cmd/Ctrl+Z undoes an accidental tick.
+          </p>
+        </footer>
       </div>
     </div>
   );

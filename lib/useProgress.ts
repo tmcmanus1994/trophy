@@ -308,13 +308,16 @@ export function useProgress(gameSlug: string, trophies: Trophy[] = []) {
       if (!(e.metaKey || e.ctrlKey) || e.shiftKey) return;
       if (e.key.toLowerCase() !== "z") return;
       const target = e.target as HTMLElement | null;
-      if (
-        target &&
-        (target.tagName === "INPUT" ||
-          target.tagName === "TEXTAREA" ||
-          target.isContentEditable)
-      ) {
-        return;
+      // Text-entry fields keep their native undo; checkboxes/radios have
+      // none, so a focused checkbox shouldn't swallow the shortcut.
+      if (target) {
+        if (target.tagName === "TEXTAREA" || target.isContentEditable) return;
+        if (
+          target.tagName === "INPUT" &&
+          !/^(checkbox|radio)$/.test((target as HTMLInputElement).type)
+        ) {
+          return;
+        }
       }
       if (undo()) e.preventDefault();
     };
