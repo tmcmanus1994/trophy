@@ -268,6 +268,24 @@ export function useProgress(gameSlug: string, trophies: Trophy[] = []) {
     [applyLocal, pushEntry, recordUndo]
   );
 
+  /** Additive mark-as-done for seed/sync-style writes: never un-marks,
+      skips entries already done, and stays out of the undo history. */
+  const markDone = useCallback(
+    (itemId: string, itemType: string = itemId.includes("::") ? "step" : "trophy") => {
+      if (progressRef.current[itemId]?.done) return;
+      const now = new Date().toISOString();
+      const entry: ProgressEntry = {
+        done: true,
+        done_at: now,
+        updated_at: now,
+        source: "manual",
+      };
+      applyLocal({ [itemId]: entry });
+      void pushEntry(itemId, itemType, entry);
+    },
+    [applyLocal, pushEntry]
+  );
+
   const toggle = useCallback(
     (itemId: string, itemType: string = itemId.includes("::") ? "step" : "trophy") => {
       recordUndo(itemId);
@@ -355,5 +373,5 @@ export function useProgress(gameSlug: string, trophies: Trophy[] = []) {
     };
   }, [trophies, progress]);
 
-  return { isDone, toggle, getValue, setValue, undo, completion, syncState, lastUpdated };
+  return { isDone, toggle, markDone, getValue, setValue, undo, completion, syncState, lastUpdated };
 }

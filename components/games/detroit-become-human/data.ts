@@ -104,7 +104,7 @@ export const RUN1: PlanChapter[] = [
     { id: "r1-12b", k: "death", txt: "Keep grinding Hank down: <code>BASKETBALL</code>, <code>ANTI-ANDROIDS</code>, then argue every point in the case discussion.", met: ["Hank ▼▼"], why: "There is no winning response in the case argument — every option is a negative. Good." },
   ] },
   { ch: "13", name: "On the Run", who: "Kara + Connor", rows: [
-    { id: "r1-13a", k: "key", txt: "<b>Let Kara be spotted.</b> Trigger the pursuit and take it to the freeway.", met: ["Unlocks #32, #35"], why: "This is what feeds Connor his freeway death, and it is what makes the chase-branch magazines exist in Jericho and Zlatko." },
+    { id: "r1-13a", k: "key", txt: "<b>Let Kara be spotted.</b> Trigger the pursuit and take it to the freeway.", met: ["Sets up death 3"], why: "You already own the chase-branch magazines (#32, #35), but the pursuit is still what puts Connor on the freeway for death #3." },
     { id: "r1-13b", k: "warn", txt: "<b>As Kara: pass every crossing QTE and win the struggle.</b> Kara and Alice must survive this chapter.", met: ["ESCAPE DEATH depends on it"], why: "This is the trap PowerPyx walks you into. A dead Kara here ends ESCAPE DEATH for the entire run." },
     { id: "r1-13c", k: "death", txt: "<b>As Connor:</b> Hank orders you not to follow onto the freeway. Follow anyway, then fail the lane QTE. Connor is hit by a truck.", met: ["Death 3 of 8", "Hank ▼"] },
     { id: "r1-13d", k: "magz", txt: "<b>Magazine object.</b> Wherever Kara slept — squat: left side of the living area; motel: in front of the TV; car: on the ground in front of it.", met: ["#31", "Canada"], why: "All three locations give the same magazine, so the sleeping choice carries no risk here." },
@@ -147,7 +147,7 @@ export const RUN1: PlanChapter[] = [
   ] },
   { ch: "26", name: "Capitol Park", who: "Markus", rows: [
     { id: "r1-26a", k: "warn", txt: "<b>Magazine object — turn left before you take a single step.</b> The instant you gain control of Markus, turn left. It is on a box right beside you.", met: ["#7", "#39"], why: "The most commonly missed magazine in the game. Move first and it disappears." },
-    { id: "r1-26b", k: "key", txt: "<b>Free the androids from the store and run a violent demonstration.</b>", met: ["Unlocks #42"], why: "This is what makes Android Riot spawn at the start of Freedom March." },
+    { id: "r1-26b", k: "key", txt: "Pick either branch of the demonstration — <b>#42 is already in your ledger</b>, so the violent-run requirement is gone.", why: "The violent Capitol Park only existed to spawn Android Riot at Freedom March. You read it in December." },
   ] },
   { ch: "27", name: "Meet Kamski", who: "Connor", rows: [
     { id: "r1-27a", k: "warn", txt: "<b><code>DON'T SHOOT</code> Chloe.</b> Non-negotiable.", met: ["Protects death 7"], why: "Shoot her and Kamski hands you the Jericho key, the chapter ends early, and the Gavin confrontation — death #7 — never happens." },
@@ -169,7 +169,7 @@ export const RUN1: PlanChapter[] = [
     { id: "r1-30c", k: "key", txt: "<b>As Kara: <code>SURRENDER</code> → <code>OBEY</code>.</b> Flowchart node reads “Kara &amp; Alice captured.”", met: ["Sets up ESCAPE DEATH"], why: "Escaping here is the good outcome — you deliberately want to be taken to Recall Center #5." },
   ] },
   { ch: "31", name: "Night of the Soul", who: "Markus", rows: [
-    { id: "r1-31a", k: "key", txt: "Choose <b>Demonstration</b> (the peaceful path).", met: ["Unlocks #45"], why: "Its twin #46 needs Revolution plus a free Kara at the bus terminal — impossible on this run since she is captured. That one is Run 02." },
+    { id: "r1-31a", k: "key", txt: "Demonstration or Revolution — <b>your call.</b> Both #45 and #46 are already in your ledger, so nothing here gates a magazine anymore.", why: "The old plan forced Demonstration for #45 and a second run for #46. Your December saves already banked both." },
     { id: "r1-31b", k: "death", txt: "<b>I'LL BE BACK pops here</b>, on the flowchart transition out of this chapter. Connor does not need to survive the ending.", met: ["Trophy"] },
   ] },
   { ch: "32", name: "Battle for Detroit", who: "Markus + Kara", rows: [
@@ -182,20 +182,12 @@ export const RUN1: PlanChapter[] = [
 ];
 
 export const RUN2: PlanChapter[] = [
-  { ch: "A", name: "Chain A — Broken through Zlatko", who: "11 chapters", rows: [
-    { id: "r2-a0", k: "key", txt: "<b>Chapter select → Broken</b>, then play continuously through to Zlatko. Do not skip ahead.", why: "The two magazines in this chain sit behind decisions made three and seven chapters earlier. Jumping straight to them spawns nothing." },
-    { id: "r2-a1", k: "key", txt: "<b>Broken:</b> do <em>not</em> push Leo. Let him win.", met: ["Unlocks #28"] },
-    { id: "r2-a2", k: "magz", txt: "<b>Waiting for Hank… </b> — precinct desk. You now get the other cover.", met: ["#28"] },
+  { ch: "A", name: "The Stealth Chain — Fugitives through Zlatko", who: "8 chapters", rows: [
+    { id: "r2-a0", k: "key", txt: "<b>Chapter select → Fugitives</b>, then play continuously through to Zlatko. Do not skip ahead.", why: "The pickup sits behind decisions made chapters earlier — the sleep choice in Fugitives and a clean On the Run. Jumping straight to Zlatko spawns nothing." },
     { id: "r2-a3", k: "key", txt: "<b>Fugitives:</b> sleep in the <b>abandoned car or the motel</b>. Not the abandoned house.", met: ["Gates #41"] },
     { id: "r2-a4", k: "key", txt: "<b>On the Run:</b> sneak past <b>every single officer completely unseen.</b> No chase, no highway.", met: ["Gates #41"], why: "Any sighting flips the branch back to #35, which you already have." },
     { id: "r2-a5", k: "magz", txt: "<b>Zlatko</b> — upstairs bedroom nightstand.", met: ["#41"], why: "Sources conflict slightly on the direction of this branch. Four guides agree stealth gives #41. If it doesn't appear, the chase route is the fallback — but you already ran that in Run 01, so check Extras first." },
-  ] },
-  { ch: "B", name: "Chain B — Crossroads through the ending", who: "3 chapters", rows: [
-    { id: "r2-b0", k: "key", txt: "<b>Chapter select → Crossroads</b>, play through Battle for Detroit.", why: "Short chain — the decision and the magazine are two chapters apart." },
-    { id: "r2-b1", k: "key", txt: "<b>Crossroads (Kara):</b> escape instead of surrendering — <code>PLAY DEAD</code> → <code>REMAIN STILL</code>. Kara and Alice must stay free.", met: ["Gates #46"] },
-    { id: "r2-b2", k: "key", txt: "<b>Night of the Soul:</b> choose <b>Revolution</b> this time.", met: ["Gates #46"] },
-    { id: "r2-b3", k: "magz", txt: "<b>Battle for Detroit (Kara)</b> — right side of the bus terminal, at the pile of suitcases.", met: ["#46"], why: "Kara and Alice must both be alive and free to reach the terminal at all." },
-    { id: "r2-b4", k: "key", txt: "Finish the chapter. <b>BOOKWORM</b> pops on the flowchart screen, and <b>DETROIT MASTER</b> follows immediately.", met: ["Platinum"] },
+    { id: "r2-a6", k: "key", txt: "Finish the chapter. If this was your last missing entry, <b>BOOKWORM</b> pops on the flowchart screen — and with the other five cleared, <b>DETROIT MASTER</b> follows.", met: ["Platinum"] },
   ] },
 ];
 
@@ -294,3 +286,31 @@ export const TROPHY_GATES: Record<string, string[]> = {
   "escape-death": ["r1-32e"],
   bookworm: MAG_IDS,
 };
+
+/**
+ * Magazines confirmed in hand from the Extras menu (reported 29 Aug 2026).
+ * Missing: 1, 4, 5, 7, 8, 10, 19, 22, 29, 39, 40, 41, 43, 44.
+ * Seeded additively into progress on page load — never removes anything.
+ */
+export const HAVE_MAGS = [
+  2, 3, 6, 9, 11, 12, 13, 14, 15, 16, 17, 18, 20, 21, 23, 24, 25, 26, 27, 28,
+  30, 31, 32, 33, 34, 35, 36, 37, 38, 42, 45, 46,
+];
+
+const HAVE_SET = new Set(HAVE_MAGS);
+
+/** Plan ids to pre-mark done: the held magazine entries, plus every
+    magazine spine row whose covers are all already in hand. */
+export const SEED_DONE_IDS = [
+  ...HAVE_MAGS.map((n) => `mag-${n}`),
+  ...[...RUN1, ...RUN2]
+    .flatMap((c) => c.rows)
+    .filter((r) => {
+      if (r.k !== "magz") return false;
+      const nums = (r.met ?? [])
+        .filter((m) => /^#\d+$/.test(m))
+        .map((m) => Number(m.slice(1)));
+      return nums.length > 0 && nums.every((n) => HAVE_SET.has(n));
+    })
+    .map((r) => r.id),
+];

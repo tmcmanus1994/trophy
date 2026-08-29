@@ -1,7 +1,7 @@
 "use client";
 
 import "./theme.css";
-import { useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import Link from "next/link";
 import { useProgress } from "@/lib/useProgress";
 import type { GuideProps } from "@/lib/types";
@@ -17,6 +17,7 @@ import {
   DEATH_IDS,
   MAG_IDS,
   TROPHY_GATES,
+  SEED_DONE_IDS,
   type PlanRow,
   type PlanChapter,
   type MagItem,
@@ -73,14 +74,25 @@ function Row({
 }
 
 export default function DetroitGuide({ game }: GuideProps) {
-  const { isDone, toggle, completion, syncState } = useProgress(
+  const { isDone, toggle, markDone, completion, syncState } = useProgress(
     game.slug,
     game.trophies
   );
-  const [filter, setFilter] = useState<MagFilter>("all");
+  const [filter, setFilter] = useState<MagFilter>("todo");
 
   const pDone = (id: string) => isDone(pid(id));
   const pToggle = (id: string) => toggle(pid(id), "step");
+
+  /* One-time additive seed: magazines confirmed in the Extras menu (and the
+     spine rows they fully cover) get marked done after the first sync
+     reconcile, so they land in the account like any other check. */
+  const seededRef = useRef(false);
+  useEffect(() => {
+    if (seededRef.current) return;
+    if (syncState !== "synced" && syncState !== "local") return;
+    seededRef.current = true;
+    for (const id of SEED_DONE_IDS) markDone(pid(id), "step");
+  }, [syncState, markDone]);
 
   /* A trophy counts as cleared once it's actually marked earned OR every
      plan row gating it is checked (the platinum follows the other five). */
@@ -182,8 +194,8 @@ export default function DetroitGuide({ game }: GuideProps) {
             Forty-three down. The story is finished and every fork you took is
             locked into the flowchart — so this isn&rsquo;t a walkthrough,
             it&rsquo;s a demolition plan for the six that are left. One hostile
-            playthrough clears four of them at once and quietly unlocks seven
-            branch-locked magazines on the way past.
+            playthrough clears four of them at once and picks up three of the
+            four branch-locked magazines still missing on the way past.
           </p>
 
           <div className="meters">
@@ -355,18 +367,20 @@ export default function DetroitGuide({ game }: GuideProps) {
         <section>
           <div className="sec-head">
             <p className="eyebrow">Run 02</p>
-            <h2>Two Short Chains</h2>
+            <h2>One Short Chain</h2>
             <span className="pill tag blue">
               {count(r2Ids)} / {r2Ids.length} steps
             </span>
           </div>
           <p className="sub" style={{ margin: "0 0 22px" }}>
-            Three magazines are mutually exclusive with the choices Run 01
-            forces on you. They don&rsquo;t need another full playthrough —
-            just two continuous chapter-select chains. <b>Continuous matters:</b>{" "}
-            the game reads the stored flowchart state, so jumping straight to
-            the chapter with the magazine won&rsquo;t spawn it. You have to
-            replay from the chapter that holds the decision.
+            Only one magazine is mutually exclusive with the choices Run 01
+            forces on you: <b>#41</b> needs the stealth branch of Kara&rsquo;s
+            escape. (#28 and #46, the other exclusives, are already in your
+            ledger.) It doesn&rsquo;t need another full playthrough — one
+            continuous chapter-select chain. <b>Continuous matters:</b> the
+            game reads the stored flowchart state, so jumping straight to
+            Zlatko won&rsquo;t spawn it. You have to replay from the chapter
+            that holds the decision.
           </p>
           <div className="spine">{RUN2.map(renderChapter)}</div>
         </section>
