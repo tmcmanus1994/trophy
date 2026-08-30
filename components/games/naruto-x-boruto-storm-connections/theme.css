@@ -1,0 +1,308 @@
+/* Naruto x Boruto: Storm Connections — chakra counter dashboard.
+   Scoped under .nxb. Cel-shade: ink outlines, hard offset shadows,
+   one sheared corner per panel, manga display type with a forward lean. */
+
+.nxb {
+  --navy: #0b1e3d;
+  --navy-2: #0e2449;
+  --panel: #102a52;
+  --panel-2: #0d2145;
+  --chakra: #2bb8f0;
+  --chakra-dim: #1a6f96;
+  --orange: #f26b1d;
+  --gold: #ffc93c;
+  --crimson: #c0392b;
+  --ink: #0a0a0c;
+  --text: #eaf2fb;
+  --text-2: #a8bdd8;
+  --text-3: #6e86a8;
+  --line: #1d3d6e;
+
+  min-height: 100vh;
+  background:
+    radial-gradient(1100px 520px at 78% -10%, rgba(43, 184, 240, 0.14), transparent 60%),
+    radial-gradient(700px 420px at -8% 30%, rgba(242, 107, 29, 0.08), transparent 55%),
+    var(--navy);
+  color: var(--text);
+  font-family: Archivo, system-ui, sans-serif;
+  font-size: 15px;
+  line-height: 1.55;
+}
+.nxb .wrap { max-width: 1060px; margin: 0 auto; padding: 0 22px 110px; }
+
+.nxb .disp {
+  font-family: Anton, Impact, sans-serif;
+  font-weight: 400;
+  text-transform: uppercase;
+  letter-spacing: 0.015em;
+  transform: skewX(-5deg);
+  transform-origin: left bottom;
+  display: inline-block;
+}
+.nxb h1, .nxb h2, .nxb h3 { margin: 0; font-weight: 400; }
+.nxb p { margin: 0; }
+
+.nxb .kicker {
+  font-family: Archivo, sans-serif;
+  font-weight: 700;
+  font-size: 11px;
+  letter-spacing: 0.24em;
+  text-transform: uppercase;
+  color: var(--text-3);
+}
+.nxb .kicker a { color: var(--text-3); text-decoration: none; }
+.nxb .kicker a:hover { color: var(--chakra); }
+
+/* ---------- header ---------- */
+.nxb header {
+  padding: 56px 0 30px;
+  display: flex;
+  gap: 30px;
+  align-items: center;
+  justify-content: space-between;
+  flex-wrap: wrap;
+}
+.nxb .title-block h1 .disp { font-size: clamp(38px, 6.4vw, 66px); line-height: 0.98; }
+.nxb .title-block .sub-title {
+  font-family: Anton, Impact, sans-serif;
+  color: var(--chakra);
+  font-size: clamp(17px, 2.6vw, 24px);
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  transform: skewX(-5deg);
+  display: inline-block;
+  margin-top: 2px;
+}
+.nxb .plat-line { margin-top: 12px; color: var(--text-2); font-size: 13.5px; display: flex; gap: 8px; align-items: center; flex-wrap: wrap; }
+.nxb .meta-row { display: flex; gap: 18px; flex-wrap: wrap; margin-top: 12px; color: var(--text-3); font-size: 12.5px; }
+.nxb .meta-row b { color: var(--text); font-weight: 600; }
+.nxb .ring-col { text-align: center; }
+.nxb .ring-col .lbl { margin-top: 6px; font-size: 11px; letter-spacing: 0.18em; text-transform: uppercase; color: var(--text-3); font-weight: 700; }
+
+/* ---------- panels ---------- */
+.nxb section { margin-top: 40px; }
+.nxb .panel {
+  position: relative;
+  background: var(--panel);
+  border: 2px solid var(--ink);
+  box-shadow: 7px 7px 0 rgba(0, 0, 0, 0.45);
+  clip-path: polygon(0 0, calc(100% - 20px) 0, 100% 20px, 100% 100%, 0 100%);
+  padding: 20px 22px;
+}
+.nxb .panel.orange { border-left: 5px solid var(--orange); }
+.nxb .panel.crimson { border-left: 5px solid var(--crimson); }
+.nxb .panel.gold { border-left: 5px solid var(--gold); }
+.nxb .sec-head { display: flex; align-items: baseline; gap: 14px; flex-wrap: wrap; margin-bottom: 14px; }
+.nxb .sec-head h2 .disp { font-size: clamp(21px, 3vw, 28px); color: var(--text); }
+.nxb .sec-head .accent { color: var(--orange); }
+.nxb .sec-note { color: var(--text-3); font-size: 12.5px; font-weight: 600; letter-spacing: 0.1em; text-transform: uppercase; }
+
+.nxb .pill {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  font-size: 10.5px;
+  font-weight: 700;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  padding: 3px 9px;
+  border: 1.5px solid var(--line);
+  color: var(--text-2);
+  background: var(--navy-2);
+  white-space: nowrap;
+}
+.nxb .pill.cyan { border-color: var(--chakra); color: var(--chakra); }
+.nxb .pill.orange { border-color: var(--orange); color: var(--orange); }
+.nxb .pill.gold { border-color: var(--gold); color: var(--gold); }
+.nxb .pill.crimson { border-color: var(--crimson); color: #e88; }
+
+/* ---------- checkboxes ---------- */
+.nxb input[type="checkbox"] {
+  appearance: none;
+  -webkit-appearance: none;
+  width: 17px;
+  height: 17px;
+  flex: none;
+  cursor: pointer;
+  border: 2px solid var(--ink);
+  outline: 1.5px solid var(--chakra-dim);
+  background: var(--navy-2);
+  position: relative;
+  margin: 2px 0 0;
+}
+.nxb input[type="checkbox"]:hover { outline-color: var(--chakra); }
+.nxb input[type="checkbox"]:checked { background: var(--orange); outline-color: var(--orange); }
+.nxb input[type="checkbox"]:checked::after {
+  content: "";
+  position: absolute;
+  left: 4px;
+  top: 0;
+  width: 5px;
+  height: 10px;
+  border: solid var(--ink);
+  border-width: 0 2.5px 2.5px 0;
+  transform: rotate(42deg);
+}
+.nxb input[type="checkbox"]:focus-visible { outline: 2.5px solid var(--chakra); outline-offset: 2px; }
+
+/* ---------- trophy rows / quick wins ---------- */
+.nxb .qgrid { display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 16px; }
+.nxb .trow { display: flex; gap: 12px; align-items: flex-start; }
+.nxb .tname {
+  font-family: Anton, Impact, sans-serif;
+  font-size: 16px;
+  letter-spacing: 0.05em;
+  text-transform: uppercase;
+  transform: skewX(-4deg);
+  display: inline-block;
+}
+.nxb .tdesc { color: var(--text-2); font-size: 13px; margin-top: 3px; }
+.nxb .earned-mark .tname { color: var(--gold); }
+.nxb .steps { margin-top: 10px; display: flex; flex-direction: column; gap: 7px; }
+.nxb .step { display: flex; gap: 9px; align-items: flex-start; font-size: 13.5px; color: var(--text-2); cursor: pointer; }
+.nxb .step.done span { opacity: 0.45; text-decoration: line-through; }
+.nxb .tnote { margin-top: 10px; font-size: 12.5px; color: var(--text-3); border-left: 3px solid var(--line); padding-left: 10px; }
+.nxb .tnote strong { color: var(--text-2); }
+.nxb .tnote p + p { margin-top: 6px; }
+
+/* ---------- braided grind lane ---------- */
+.nxb .braid { position: relative; padding-left: 30px; display: flex; flex-direction: column; gap: 14px; }
+.nxb .braid::before {
+  content: "";
+  position: absolute;
+  left: 9px;
+  top: 12px;
+  bottom: 12px;
+  width: 4px;
+  background: repeating-linear-gradient(
+    180deg,
+    var(--chakra) 0 14px,
+    var(--orange) 14px 28px
+  );
+  border: 1.5px solid var(--ink);
+}
+.nxb .grind { position: relative; }
+.nxb .grind::before {
+  content: "";
+  position: absolute;
+  left: -27px;
+  top: 22px;
+  width: 12px;
+  height: 12px;
+  border-radius: 50%;
+  background: var(--chakra);
+  border: 2px solid var(--ink);
+}
+.nxb .grind.met::before { background: var(--gold); }
+.nxb .grind-head { display: flex; align-items: center; gap: 10px; flex-wrap: wrap; }
+.nxb .grind-head .spacer { flex: 1; }
+
+/* ---------- counters ---------- */
+.nxb .counter { display: flex; align-items: center; gap: 8px; }
+.nxb .count-input {
+  width: 64px;
+  font-family: Anton, Impact, sans-serif;
+  font-size: 20px;
+  letter-spacing: 0.03em;
+  text-align: right;
+  color: var(--text);
+  background: var(--navy-2);
+  border: 2px solid var(--ink);
+  outline: 1.5px solid var(--chakra-dim);
+  padding: 3px 7px;
+}
+.nxb .count-input:focus-visible { outline: 2.5px solid var(--chakra); }
+.nxb .count-input::-webkit-outer-spin-button,
+.nxb .count-input::-webkit-inner-spin-button { -webkit-appearance: none; margin: 0; }
+.nxb .count-input { appearance: textfield; -moz-appearance: textfield; }
+.nxb .count-total { font-family: Anton, Impact, sans-serif; font-size: 15px; color: var(--text-3); }
+.nxb .count-total.full { color: var(--gold); }
+.nxb .plus {
+  font-family: Anton, Impact, sans-serif;
+  font-size: 13px;
+  color: var(--ink);
+  background: var(--chakra);
+  border: 2px solid var(--ink);
+  box-shadow: 3px 3px 0 rgba(0, 0, 0, 0.4);
+  padding: 3px 9px;
+  cursor: pointer;
+}
+.nxb .plus:hover { background: var(--gold); }
+.nxb .plus:active { transform: translate(2px, 2px); box-shadow: 1px 1px 0 rgba(0, 0, 0, 0.4); }
+.nxb .cbar { height: 8px; background: var(--navy-2); border: 2px solid var(--ink); margin-top: 10px; position: relative; }
+.nxb .cbar i {
+  position: absolute;
+  inset: 0 auto 0 0;
+  background: linear-gradient(90deg, var(--orange), #ff8f4a);
+  display: block;
+}
+.nxb .cbar.full i { background: linear-gradient(90deg, var(--gold), #ffe08a); }
+
+/* ---------- supreme domain ---------- */
+.nxb .sphere-row {
+  display: flex;
+  gap: 18px;
+  flex-wrap: wrap;
+  justify-content: center;
+  margin: 18px 0 6px;
+}
+.nxb .sphere { text-align: center; }
+.nxb .sphere .slot-lbl {
+  margin-top: 4px;
+  font-size: 10.5px;
+  font-weight: 700;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+  color: var(--text-3);
+}
+.nxb .sphere.lit .slot-lbl { color: var(--gold); }
+.nxb .sphere .counter { justify-content: center; margin-top: 7px; }
+.nxb .sphere .count-input { width: 52px; font-size: 17px; }
+.nxb .warn {
+  margin-top: 16px;
+  border: 2px solid var(--crimson);
+  background: rgba(192, 57, 43, 0.12);
+  padding: 12px 15px;
+  font-size: 13.5px;
+  color: var(--text-2);
+}
+.nxb .warn b { color: #ff9d8a; }
+
+/* ---------- archive ---------- */
+.nxb details.archive { border: 2px solid var(--ink); background: var(--panel-2); box-shadow: 7px 7px 0 rgba(0, 0, 0, 0.45); }
+.nxb details.archive summary {
+  cursor: pointer;
+  list-style: none;
+  padding: 14px 20px;
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  flex-wrap: wrap;
+}
+.nxb details.archive summary::-webkit-details-marker { display: none; }
+.nxb details.archive summary .disp { font-size: 18px; color: var(--text-2); }
+.nxb details.archive[open] summary { border-bottom: 1.5px solid var(--line); }
+.nxb .arch-body { padding: 14px 20px 18px; }
+.nxb .arch-group { margin-bottom: 14px; }
+.nxb .arch-group h3 { font-size: 11px; font-weight: 700; letter-spacing: 0.18em; text-transform: uppercase; color: var(--text-3); margin-bottom: 7px; }
+.nxb .arch-list { display: flex; flex-wrap: wrap; gap: 6px 14px; }
+.nxb .arch-item { display: inline-flex; align-items: center; gap: 7px; font-size: 12.5px; color: var(--text-2); cursor: pointer; }
+.nxb .arch-item input[type="checkbox"] { width: 14px; height: 14px; margin: 0; }
+.nxb .arch-item input[type="checkbox"]:checked::after { left: 3px; top: -1px; width: 4px; height: 8px; }
+
+/* ---------- platinum ---------- */
+.nxb .plat-card { display: flex; gap: 16px; align-items: center; flex-wrap: wrap; }
+.nxb .plat-card .tname { font-size: 22px; }
+.nxb .plat-card.ready { border-color: var(--gold); box-shadow: 7px 7px 0 rgba(255, 201, 60, 0.15), 0 0 26px rgba(255, 201, 60, 0.18); }
+
+.nxb footer { margin-top: 60px; padding-top: 18px; border-top: 1.5px solid var(--line); color: var(--text-3); font-size: 12.5px; }
+
+.nxb .sync-slot { margin-left: auto; }
+
+@media (max-width: 640px) {
+  .nxb header { padding-top: 40px; }
+  .nxb .sphere-row { gap: 12px; }
+}
+@media (prefers-reduced-motion: reduce) {
+  .nxb * { animation: none !important; transition: none !important; }
+}
