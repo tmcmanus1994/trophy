@@ -1,5 +1,6 @@
 import Link from "next/link";
 import { getAllGames } from "@/lib/content";
+import { getPlatinumLibrary } from "@/lib/platinums";
 import { LibraryView } from "@/components/library/LibraryView";
 import { ProfileChip } from "@/components/library/ProfileChip";
 
@@ -43,6 +44,7 @@ function Glyphs() {
 
 export default function Library() {
   const games = getAllGames();
+  const platinumCount = getPlatinumLibrary()?.entries.length ?? 0;
 
   return (
     <div className="library">
@@ -56,6 +58,12 @@ export default function Library() {
             Every guide, every checkbox, synced everywhere.
           </p>
           <div className="library-beam" aria-hidden="true" />
+          {platinumCount > 0 && (
+            <Link href="/platinums" className="library-vault-link">
+              <span className="vault-diamond" aria-hidden="true" />
+              Platinum Vault — {platinumCount} and counting
+            </Link>
+          )}
         </header>
 
         {games.length === 0 ? (
@@ -72,6 +80,7 @@ export default function Library() {
 
         <footer className="library-footer">
           <Link href="/sync">PSN Sync</Link>
+          <Link href="/platinums">Platinum Vault</Link>
         </footer>
       </div>
     </div>

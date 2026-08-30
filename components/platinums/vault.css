@@ -1,0 +1,199 @@
+/* Platinum Vault — the trophy case. Sony-palette continuation of the
+   library home with a platinum sheen. Scoped under .pvault. */
+
+.pvault {
+  min-height: 100vh;
+  padding: 0 22px 100px;
+  position: relative;
+}
+.pvault .inner { max-width: 880px; margin: 0 auto; }
+
+.pvault .back {
+  display: inline-block;
+  margin-top: 26px;
+  font-size: 12px;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: var(--ps-blue-bright);
+  text-decoration: none;
+}
+.pvault .back:hover { text-decoration: underline; }
+
+/* ---------- hero ---------- */
+.pvault .hero { text-align: center; padding: 40px 0 8px; }
+.pvault .hero-count {
+  font-family: var(--font-display), sans-serif;
+  font-size: clamp(56px, 11vw, 96px);
+  line-height: 1;
+  background: linear-gradient(165deg, #eaf4ff 20%, var(--trophy-platinum) 55%, #5b86ad 90%);
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
+  filter: drop-shadow(0 0 22px rgba(159, 196, 232, 0.28));
+}
+.pvault .hero h1 {
+  font-family: var(--font-display), sans-serif;
+  font-size: clamp(17px, 3vw, 22px);
+  letter-spacing: 0.34em;
+  text-transform: uppercase;
+  color: var(--trophy-platinum);
+  margin: 10px 0 0;
+  font-weight: 400;
+}
+.pvault .hero-sub {
+  margin-top: 12px;
+  color: color-mix(in srgb, var(--trophy-platinum) 55%, #6d7f95);
+  font-size: 13.5px;
+  letter-spacing: 0.04em;
+}
+.pvault .hero-beam {
+  height: 1px;
+  max-width: 420px;
+  margin: 26px auto 0;
+  background: linear-gradient(90deg, transparent, var(--trophy-platinum), transparent);
+  opacity: 0.65;
+}
+
+/* ---------- stat chips ---------- */
+.pvault .stats {
+  display: flex;
+  justify-content: center;
+  gap: 10px;
+  flex-wrap: wrap;
+  margin-top: 22px;
+}
+.pvault .stat {
+  border: 1px solid color-mix(in srgb, var(--trophy-platinum) 30%, transparent);
+  background: color-mix(in srgb, var(--trophy-platinum) 7%, transparent);
+  padding: 7px 14px;
+  font-size: 12px;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: color-mix(in srgb, var(--trophy-platinum) 70%, #8fa3bd);
+  border-radius: 999px;
+}
+.pvault .stat b { color: #eaf4ff; font-weight: 600; letter-spacing: 0.02em; }
+
+/* ---------- forge (tracked, not yet platted) ---------- */
+.pvault .forge {
+  margin-top: 44px;
+  border: 1px dashed color-mix(in srgb, var(--ps-blue-bright) 40%, transparent);
+  border-radius: 10px;
+  padding: 14px 18px;
+  display: flex;
+  align-items: baseline;
+  gap: 8px 14px;
+  flex-wrap: wrap;
+}
+.pvault .forge-label {
+  font-size: 11px;
+  font-weight: 600;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  color: var(--ps-blue-bright);
+}
+.pvault .forge a {
+  color: #c6d8ee;
+  text-decoration: none;
+  font-size: 13.5px;
+  border-bottom: 1px dotted color-mix(in srgb, var(--ps-blue-bright) 50%, transparent);
+}
+.pvault .forge a:hover { color: var(--ps-blue-bright); }
+
+/* ---------- year groups ---------- */
+.pvault .year { margin-top: 40px; }
+.pvault .year-head {
+  display: flex;
+  align-items: baseline;
+  gap: 12px;
+  border-bottom: 1px solid color-mix(in srgb, var(--trophy-platinum) 22%, transparent);
+  padding-bottom: 8px;
+  margin-bottom: 6px;
+}
+.pvault .year-head h2 {
+  font-family: var(--font-display), sans-serif;
+  font-size: 17px;
+  letter-spacing: 0.22em;
+  color: #dcebfb;
+  margin: 0;
+  font-weight: 400;
+}
+.pvault .year-head .n {
+  font-size: 12px;
+  letter-spacing: 0.12em;
+  color: color-mix(in srgb, var(--trophy-platinum) 55%, #6d7f95);
+}
+
+.pvault .row {
+  display: grid;
+  grid-template-columns: auto 1fr auto auto;
+  gap: 8px 14px;
+  align-items: center;
+  padding: 10px 10px;
+  border-radius: 8px;
+  border: 1px solid transparent;
+}
+.pvault .row:hover {
+  background: color-mix(in srgb, var(--trophy-platinum) 6%, transparent);
+  border-color: color-mix(in srgb, var(--trophy-platinum) 18%, transparent);
+}
+.pvault .row.fresh {
+  border-color: color-mix(in srgb, var(--ps-blue-bright) 45%, transparent);
+  background: color-mix(in srgb, var(--ps-blue-bright) 8%, transparent);
+  box-shadow: 0 0 18px rgba(51, 161, 255, 0.12);
+}
+.pvault .row .t { min-width: 0; }
+.pvault .row .title {
+  font-size: 14.5px;
+  font-weight: 500;
+  color: #eaf2fb;
+  letter-spacing: 0.01em;
+}
+.pvault .row .title a { color: inherit; text-decoration: none; }
+.pvault .row .title a:hover { color: var(--ps-blue-bright); }
+.pvault .row .pname {
+  display: block;
+  font-size: 12px;
+  color: color-mix(in srgb, var(--trophy-platinum) 60%, #7d8fa8);
+  font-style: italic;
+  margin-top: 1px;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+.pvault .chip {
+  font-size: 10.5px;
+  font-weight: 600;
+  letter-spacing: 0.12em;
+  padding: 2px 8px;
+  border-radius: 999px;
+  border: 1px solid color-mix(in srgb, #8fa3bd 45%, transparent);
+  color: #a9bcd4;
+  white-space: nowrap;
+}
+.pvault .chip.ps5 { border-color: color-mix(in srgb, var(--ps-blue-bright) 55%, transparent); color: var(--ps-blue-bright); }
+.pvault .chip.new {
+  border-color: var(--ps-blue-bright);
+  color: #dff0ff;
+  background: color-mix(in srgb, var(--ps-blue-bright) 25%, transparent);
+}
+.pvault .row .date {
+  font-size: 12px;
+  color: #7d8fa8;
+  font-variant-numeric: tabular-nums;
+  white-space: nowrap;
+}
+
+.pvault .prov {
+  margin-top: 48px;
+  padding-top: 16px;
+  border-top: 1px solid color-mix(in srgb, var(--trophy-platinum) 18%, transparent);
+  color: #6d7f95;
+  font-size: 12px;
+  line-height: 1.6;
+}
+
+@media (max-width: 560px) {
+  .pvault .row { grid-template-columns: auto 1fr auto; }
+  .pvault .row .date { grid-column: 2 / -1; text-align: right; margin-top: -4px; }
+}

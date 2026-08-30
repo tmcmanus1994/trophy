@@ -1035,3 +1035,32 @@ button {
     justify-content: space-between;
   }
 }
+
+/* ---------- platinum vault entry chip (home hero) ---------- */
+.library-vault-link {
+  display: inline-flex;
+  align-items: center;
+  gap: 9px;
+  margin-top: 20px;
+  padding: 8px 18px;
+  border-radius: 999px;
+  border: 1px solid color-mix(in srgb, var(--trophy-platinum) 40%, transparent);
+  background: color-mix(in srgb, var(--trophy-platinum) 8%, transparent);
+  color: var(--trophy-platinum);
+  font-size: 12.5px;
+  font-weight: 600;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  text-decoration: none;
+  transition: box-shadow 0.2s ease, border-color 0.2s ease;
+}
+.library-vault-link:hover {
+  border-color: var(--trophy-platinum);
+  box-shadow: 0 0 18px rgba(159, 196, 232, 0.25);
+}
+.library-vault-link .vault-diamond {
+  width: 8px;
+  height: 8px;
+  background: linear-gradient(135deg, #eaf4ff, var(--trophy-platinum));
+  transform: rotate(45deg);
+}
