@@ -1,0 +1,319 @@
+/* Onimusha: Way of the Sword — lacquer & gauntlet-gold. Scoped under .oni.
+   Sumi-ink ground, storm-indigo depth, thin gold frames, engraved Cinzel
+   capitals over a quiet Garamond body. The Oni eye is the platinum meter. */
+
+.oni {
+  --sumi: #0b0d10;
+  --storm: #1b2f48;
+  --lacquer: #101318;
+  --lacquer-2: #141922;
+  --gold: #b8925a;
+  --gold-dim: #7d6540;
+  --gold-wash: rgba(184, 146, 90, 0.12);
+  --eye: #5a6cff;
+  --eye-deep: #2c3390;
+  --crimson: #a3201e;
+  --crimson-wash: rgba(163, 32, 30, 0.14);
+  --ember: #e36a2c;
+  --text: #e2dccd;
+  --text-2: #a99f8c;
+  --text-3: #6f6a5e;
+  --line: rgba(184, 146, 90, 0.28);
+  --line-soft: rgba(184, 146, 90, 0.14);
+
+  min-height: 100vh;
+  background:
+    radial-gradient(900px 460px at 82% -6%, rgba(27, 47, 72, 0.55), transparent 62%),
+    radial-gradient(680px 380px at 8% 22%, rgba(90, 108, 255, 0.07), transparent 60%),
+    radial-gradient(700px 420px at 92% 78%, rgba(227, 106, 44, 0.05), transparent 55%),
+    var(--sumi);
+  color: var(--text);
+  font-family: "EB Garamond", Georgia, serif;
+  font-size: 16px;
+  line-height: 1.6;
+}
+.oni .wrap { max-width: 1020px; margin: 0 auto; padding: 0 22px 110px; position: relative; }
+
+.oni .disp {
+  font-family: Cinzel, "Times New Roman", serif;
+  font-weight: 600;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+}
+.oni h1, .oni h2, .oni h3, .oni p { margin: 0; }
+.oni .num { font-variant-numeric: tabular-nums; }
+
+.oni .kicker {
+  font-family: Cinzel, serif;
+  font-size: 11px;
+  letter-spacing: 0.3em;
+  text-transform: uppercase;
+  color: var(--text-3);
+}
+.oni .kicker a { color: var(--gold); text-decoration: none; }
+.oni .kicker a:hover { color: #d8b273; }
+
+/* faint kanji ornament */
+.oni .kanji {
+  position: absolute;
+  top: 30px;
+  right: 10px;
+  writing-mode: vertical-rl;
+  font-size: clamp(60px, 9vw, 110px);
+  color: rgba(184, 146, 90, 0.07);
+  user-select: none;
+  pointer-events: none;
+  line-height: 1;
+}
+
+/* ---------- header ---------- */
+.oni header {
+  padding: 60px 0 28px;
+  display: flex;
+  gap: 34px;
+  align-items: center;
+  justify-content: space-between;
+  flex-wrap: wrap;
+}
+.oni .title-block h1 { margin-top: 16px; }
+.oni .title-block h1 .disp { display: block; font-size: clamp(34px, 5.6vw, 54px); color: var(--gold); font-weight: 700; line-height: 1.05; }
+.oni .title-block h1 .way {
+  display: block;
+  font-family: Cinzel, serif;
+  font-size: clamp(14px, 2.2vw, 19px);
+  letter-spacing: 0.42em;
+  text-transform: uppercase;
+  color: var(--text-2);
+  margin-top: 8px;
+}
+.oni .plat-line { margin-top: 14px; color: var(--text-2); font-size: 14.5px; display: flex; gap: 8px; align-items: center; flex-wrap: wrap; }
+.oni .meta-row { display: flex; gap: 18px; flex-wrap: wrap; margin-top: 12px; color: var(--text-3); font-size: 13px; align-items: center; }
+.oni .meta-row b { color: var(--text); font-weight: 600; }
+.oni .eye-col { text-align: center; }
+.oni .eye-col .lbl {
+  margin-top: 8px;
+  font-family: Cinzel, serif;
+  font-size: 10.5px;
+  letter-spacing: 0.26em;
+  text-transform: uppercase;
+  color: var(--text-3);
+}
+
+/* ---------- slash divider ---------- */
+.oni .slash { margin: 44px 0 0; display: block; width: 100%; height: 26px; }
+
+/* ---------- phases ---------- */
+.oni section.phase { margin-top: 26px; }
+.oni .phase-head { display: flex; align-items: baseline; gap: 16px; flex-wrap: wrap; margin-bottom: 6px; }
+.oni .phase-head .ord {
+  font-family: Cinzel, serif;
+  font-size: 30px;
+  font-weight: 700;
+  color: var(--gold);
+  opacity: 0.85;
+}
+.oni .phase-head h2 { font-family: Cinzel, serif; font-size: clamp(17px, 2.6vw, 23px); letter-spacing: 0.2em; text-transform: uppercase; color: var(--text); font-weight: 600; }
+.oni .phase-sum { color: var(--text-2); font-style: italic; font-size: 15px; max-width: 76ch; margin-bottom: 18px; }
+
+/* ---------- panels ---------- */
+.oni .panel {
+  background: linear-gradient(180deg, var(--lacquer-2), var(--lacquer));
+  border: 1px solid var(--line);
+  box-shadow: inset 0 0 0 1px rgba(0, 0, 0, 0.6), 0 6px 18px rgba(0, 0, 0, 0.35);
+  padding: 18px 20px;
+  position: relative;
+}
+.oni .panel + .panel { margin-top: 14px; }
+.oni .panel-title {
+  font-family: Cinzel, serif;
+  font-size: 13px;
+  letter-spacing: 0.24em;
+  text-transform: uppercase;
+  color: var(--gold);
+  margin-bottom: 10px;
+}
+.oni .grid2 { display: grid; grid-template-columns: repeat(auto-fit, minmax(310px, 1fr)); gap: 14px; }
+.oni .grid2 .panel + .panel { margin-top: 0; }
+
+/* ---------- badges ---------- */
+.oni .badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 5px;
+  font-family: Cinzel, serif;
+  font-size: 9.5px;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+  padding: 2.5px 8px;
+  border: 1px solid var(--line);
+  color: var(--text-2);
+  white-space: nowrap;
+}
+.oni .badge.drill { border-color: var(--eye); color: #9aa5ff; background: rgba(90, 108, 255, 0.1); }
+.oni .badge.nodrill { border-color: var(--crimson); color: #d05a50; background: var(--crimson-wash); }
+.oni .badge.met { border-color: var(--gold); color: var(--gold); background: var(--gold-wash); }
+.oni .badge.gold { border-color: var(--gold); color: var(--gold); }
+
+/* ---------- checkbox ---------- */
+.oni input[type="checkbox"] {
+  appearance: none;
+  -webkit-appearance: none;
+  width: 16px;
+  height: 16px;
+  flex: none;
+  cursor: pointer;
+  border: 1px solid var(--gold-dim);
+  background: rgba(0, 0, 0, 0.4);
+  transform: rotate(45deg);
+  position: relative;
+  margin: 3px 4px 0;
+}
+.oni input[type="checkbox"]:hover { border-color: var(--gold); }
+.oni input[type="checkbox"]:checked { background: var(--eye); border-color: var(--eye); box-shadow: 0 0 8px rgba(90, 108, 255, 0.55); }
+.oni input[type="checkbox"]:checked::after {
+  content: "";
+  position: absolute;
+  inset: 4px;
+  background: #cfd6ff;
+  border-radius: 50%;
+}
+.oni input[type="checkbox"]:focus-visible { outline: 2px solid var(--eye); outline-offset: 3px; }
+
+/* ---------- trophy rows ---------- */
+.oni .trow { display: flex; gap: 12px; align-items: flex-start; padding: 10px 0; border-top: 1px solid var(--line-soft); }
+.oni .trow:first-of-type { border-top: 0; }
+.oni .trow .body { flex: 1; min-width: 0; }
+.oni .tname { font-family: Cinzel, serif; font-size: 14.5px; letter-spacing: 0.08em; color: var(--text); font-weight: 600; }
+.oni .trow.done .tname { color: var(--gold); }
+.oni .trow.done .tdesc { opacity: 0.55; }
+.oni .tdesc { color: var(--text-2); font-size: 14px; font-style: italic; }
+.oni .tnote { margin-top: 6px; font-size: 13.5px; color: var(--text-3); border-left: 2px solid var(--line-soft); padding-left: 10px; }
+.oni .tnote strong { color: var(--text-2); }
+.oni .tnote p + p { margin-top: 5px; }
+.oni .thead-line { display: flex; align-items: center; gap: 9px; flex-wrap: wrap; }
+.oni .thead-line .spacer { flex: 1; }
+
+/* ---------- steps ---------- */
+.oni .steps { margin-top: 9px; display: grid; grid-template-columns: repeat(auto-fill, minmax(240px, 1fr)); gap: 4px 16px; }
+.oni .steps.single { grid-template-columns: 1fr; }
+.oni .step { display: flex; gap: 8px; align-items: flex-start; font-size: 14px; color: var(--text-2); cursor: pointer; }
+.oni .step input[type="checkbox"] { width: 13px; height: 13px; margin-top: 4px; }
+.oni .step input[type="checkbox"]:checked::after { inset: 3px; }
+.oni .step.done span { opacity: 0.45; text-decoration: line-through; }
+
+/* ---------- counters ---------- */
+.oni .counter { display: inline-flex; align-items: center; gap: 7px; }
+.oni .count-input {
+  width: 58px;
+  font-family: Cinzel, serif;
+  font-size: 16px;
+  font-weight: 600;
+  text-align: right;
+  color: var(--text);
+  background: rgba(0, 0, 0, 0.45);
+  border: 1px solid var(--gold-dim);
+  padding: 3px 7px;
+  font-variant-numeric: tabular-nums;
+}
+.oni .count-input:focus-visible { outline: 2px solid var(--eye); }
+.oni .count-input::-webkit-outer-spin-button,
+.oni .count-input::-webkit-inner-spin-button { -webkit-appearance: none; margin: 0; }
+.oni .count-input { appearance: textfield; -moz-appearance: textfield; }
+.oni .count-total { font-family: Cinzel, serif; font-size: 13px; color: var(--text-3); }
+.oni .count-total.full { color: var(--gold); }
+.oni .plus {
+  font-family: Cinzel, serif;
+  font-size: 12px;
+  font-weight: 700;
+  color: var(--sumi);
+  background: var(--gold);
+  border: 1px solid #d8b273;
+  padding: 3px 9px;
+  cursor: pointer;
+}
+.oni .plus:hover { background: #d8b273; }
+.oni .cbar { height: 4px; background: rgba(255, 255, 255, 0.07); margin-top: 8px; position: relative; overflow: hidden; }
+.oni .cbar i { position: absolute; inset: 0 auto 0 0; background: linear-gradient(90deg, var(--eye-deep), var(--eye)); display: block; }
+.oni .cbar.full i { background: linear-gradient(90deg, var(--gold-dim), var(--gold)); }
+
+/* ---------- point of no return gate ---------- */
+.oni .gate {
+  margin-top: 44px;
+  border: 1px solid var(--crimson);
+  background:
+    linear-gradient(180deg, rgba(163, 32, 30, 0.16), rgba(163, 32, 30, 0.05));
+  padding: 18px 22px;
+  text-align: center;
+}
+.oni .gate .disp { color: #d05a50; font-size: 16px; letter-spacing: 0.3em; }
+.oni .gate p { color: var(--text-2); font-size: 14.5px; margin-top: 8px; font-style: italic; }
+.oni .gate b { color: var(--text); }
+
+/* ---------- carryover ---------- */
+.oni .carry { display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 14px; margin-top: 14px; }
+.oni .carry .col { padding: 16px 18px; border: 1px solid var(--line); background: var(--lacquer); }
+.oni .carry .col.no { border-color: rgba(163, 32, 30, 0.5); }
+.oni .carry h3 { font-family: Cinzel, serif; font-size: 12px; letter-spacing: 0.22em; text-transform: uppercase; color: var(--gold); margin-bottom: 9px; }
+.oni .carry .col.no h3 { color: #d05a50; }
+.oni .carry ul { margin: 0; padding-left: 18px; color: var(--text-2); font-size: 14px; }
+.oni .carry li + li { margin-top: 3px; }
+
+/* ---------- boss ledger ---------- */
+.oni .ledger-head, .oni .boss-row {
+  display: grid;
+  grid-template-columns: 1fr 74px 84px;
+  gap: 10px;
+  align-items: center;
+}
+.oni .ledger-head {
+  font-family: Cinzel, serif;
+  font-size: 9.5px;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  color: var(--text-3);
+  padding-bottom: 8px;
+  border-bottom: 1px solid var(--line);
+  text-align: center;
+}
+.oni .ledger-head :first-child { text-align: left; }
+.oni .boss-row { padding: 8px 0; border-bottom: 1px solid var(--line-soft); }
+.oni .boss-row .chk { display: flex; justify-content: center; }
+.oni .boss-row details { grid-column: 1 / -1; }
+.oni .boss-row summary {
+  cursor: pointer;
+  font-size: 12.5px;
+  color: var(--text-3);
+  font-style: italic;
+  list-style: none;
+}
+.oni .boss-row summary::before { content: "› strategy"; }
+.oni .boss-row details[open] summary::before { content: "‹ strategy"; }
+.oni .boss-row summary::-webkit-details-marker { display: none; }
+.oni .boss-row .bnote { font-size: 13.5px; color: var(--text-2); padding: 6px 0 2px 12px; border-left: 2px solid var(--line-soft); margin-top: 4px; }
+.oni .boss-name { font-family: Cinzel, serif; font-size: 14px; letter-spacing: 0.06em; font-weight: 600; }
+.oni .boss-row.slain .boss-name { color: var(--gold); }
+.oni .boss-chapter { font-size: 12.5px; color: var(--text-3); font-style: italic; }
+
+/* ---------- platinum card ---------- */
+.oni .plat-card {
+  margin-top: 44px;
+  border: 1px solid var(--gold);
+  background: linear-gradient(180deg, rgba(184, 146, 90, 0.12), rgba(184, 146, 90, 0.03));
+  padding: 20px 22px;
+  display: flex;
+  gap: 16px;
+  align-items: center;
+  flex-wrap: wrap;
+}
+.oni .plat-card .tname { font-size: 20px; letter-spacing: 0.2em; }
+.oni .plat-card.ready { box-shadow: 0 0 30px rgba(184, 146, 90, 0.3); }
+
+.oni footer { margin-top: 56px; padding-top: 16px; border-top: 1px solid var(--line-soft); color: var(--text-3); font-size: 13px; }
+
+@media (max-width: 640px) {
+  .oni header { padding-top: 44px; }
+  .oni .ledger-head, .oni .boss-row { grid-template-columns: 1fr 56px 64px; }
+}
+@media (prefers-reduced-motion: reduce) {
+  .oni * { animation: none !important; transition: none !important; }
+}

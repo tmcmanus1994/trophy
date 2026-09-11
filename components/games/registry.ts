@@ -9,6 +9,7 @@ import PragmataGuide from "./pragmata/Guide";
 import CyberpunkGuide from "./cyberpunk-2077/Guide";
 import WukongGuide from "./black-myth-wukong/Guide";
 import NarutoGuide from "./naruto-x-boruto-storm-connections/Guide";
+import OnimushaGuide from "./onimusha-way-of-the-sword/Guide";
 
 /**
  * slug -> custom guide component. A game with no entry here still renders
@@ -24,6 +25,7 @@ export const guides: Record<string, ComponentType<GuideProps>> = {
   "cyberpunk-2077": CyberpunkGuide,
   "black-myth-wukong": WukongGuide,
   "naruto-x-boruto-storm-connections": NarutoGuide,
+  "onimusha-way-of-the-sword": OnimushaGuide,
 };
 
 export const getGuide = (slug: string): ComponentType<GuideProps> =>
